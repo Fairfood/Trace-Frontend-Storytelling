@@ -1,0 +1,133 @@
+<ng-container *ngIf="!dataLoading">
+
+    <ng-container *ngIf="!invalidLink">
+
+        <section class="first-section" *ngIf="themeData">
+
+            <app-header [data]="themeData"></app-header>
+
+            <section class="bg-image"
+                [ngStyle]="{'background-image':'url(' + themeData?.banner_image + ')', 'width': themeData.banner_mode === 2 && '100%'}">
+            </section>
+
+            <section class="bg-image-mobile" [ngClass]="{'fto': isFto}"
+                [ngStyle]="{'background-image':'url(' + themeData?.mobile_banner_image + ')'}">
+            </section>
+
+            <section class="content-wrapper"
+                [ngStyle]="{'justify-content': batchClaims?.length === 0?'center':'space-evenly'}">
+                <!-- check the character limit in the below link -->
+                <!-- https://fairfood.atlassian.net/wiki/spaces/THD/pages/53182472/Storytelling+interface -->
+                <h1 class="font-heading" [ngStyle]="{'margin-bottom': batchClaims?.length === 0?'30px':'10px' }"
+                    [ngClass]="{'use-default': themeData.banner_mode === 2}">
+                    {{themeData?.banner_text}}
+                </h1>
+
+                <app-claim-list [batchClaims]="batchClaims" [primaryClaimIndex]="primaryClaimIndex"
+                    (claimClicked)="claimDetails($event)"></app-claim-list>
+
+                <!-- action buttons  -->
+                <aside class="action-btn ff-flex-start" aria-label="">
+                    <button class="button-primary ff-flex-center" (click)="getLink(themeData?.action_button_url)"
+                        *ngIf="themeData?.show_action_button">
+                        {{themeData?.action_button_text}}
+                        <span class="material-icons">east</span>
+                    </button>
+                    <app-share-button [data]="sharingData" *ngIf="themeData?.show_share_button"></app-share-button>
+                </aside>
+            </section>
+
+            <!-- project information  -->
+            <div class="project-information ff-flex-column">
+                <article class="image-gallery ff-flex-center">
+                    <app-image-carousal [imageArray]="imagesUrl" *ngIf="!stageLoading"></app-image-carousal>
+                    <aside class="stage-wrapper ff-flex-column" *ngIf="stageLoading" aria-label="">
+                        <app-placeholder-loader [rows]="2" [showImagePlaceholder]="true"
+                            [lineHeight]="'10px'"></app-placeholder-loader>
+                    </aside>
+                    <aside aria-label="curved bg in mobile" class="curved-bg-mobile"></aside>
+                </article>
+                <aside class="info ff-flex-column expand" aria-label="">
+                    <h2 class="font-subheading">
+                        {{programSection.tittle}}
+                    </h2>
+                    <p class="font-paragraph">
+                        {{programSection?.description}}
+                    </p>
+                    <ul class="additional-info ff-flex-column ">
+                        <ng-container *ngFor="let item of programSection?.program_stats_details">
+                            <li *ngIf="item?.is_visible" class="ff-flex-column">
+                                <span class="font-subheading">
+                                    <ng-container *ngIf="item | programSymbol: 'left'">
+                                        {{item.symbol}}
+                                    </ng-container>
+                                    {{item?.value}}
+                                    <ng-container *ngIf="item | programSymbol: 'right'">
+                                        {{item.symbol}}
+                                    </ng-container>
+                                </span>
+                                <span class="key">{{ item?.name }}</span>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </aside>
+            </div>
+            <img src="../../assets/images/Pattern_masked.png" alt="It is a placeholder image" class="bg-stripes"
+                aria-hidden="true">
+            <section class="curved-bg" aria-hidden="true"></section>
+        </section>
+
+        <section class="g-map-container" *ngIf="gMapLoaded">
+            <google-map height="400px" width="100%" [zoom]="2" [options]="mapDefaultOptions"
+                (mapInitialized)="mapReady($event)" #mapIdentifier>
+            </google-map>
+        </section>
+
+
+        <section class="transactions-container">
+            <div class="timeline">
+                <app-timeline [timelineData]="stages" (itemClicked)="selectStage($event)" *ngIf="!stageLoading">
+                </app-timeline>
+                <div class="stage-wrapper ff-flex-column mt-0" *ngIf="stageLoading">
+                    <app-placeholder-loader [rows]="2" [lineHeight]="'90px'"></app-placeholder-loader>
+                </div>
+            </div>
+
+            <div class="details" *ngIf="!isMobile">
+                <app-transaction-detail [transactionData]="selectedStage" [imagesUrl]="imagesUrl"
+                    [batchId]="themeData.batch" [theme]="themeData.name" *ngIf="!stageLoading"
+                    (claimClicked)="companyClaim($event)">
+                </app-transaction-detail>
+                <div class="content-loader-wrapper ff-flex-wrap" *ngIf="stageLoading">
+                    <app-placeholder-loader [rows]="4" [showImagePlaceholder]="true" [showQuarterWidth]="true"
+                        class="w-100 ff-flex-start"></app-placeholder-loader>
+                </div>
+            </div>
+        </section>
+
+        <!-- bottom video section  -->
+        <app-video-content [data]="themeData" [sharingData]="sharingData" *ngIf="themeData"></app-video-content>
+    </ng-container>
+
+    <!-- only for invalid link  -->
+
+    <ng-container *ngIf="invalidLink">
+        <section class="header-padding">
+            <app-header [data]="themeData" class="w-100"></app-header>
+        </section>
+        <section class="invalid-link ff-flex-center ff-flex-column">
+            <img class="img-not-found" src="../../assets/images/img_not_found.svg" alt=""> <br>
+            <h3 class="font-subheading"> {{ '404Text' | translate }}</h3>
+            <p class="font-section-heading">
+                {{'brokenLinkText'| translate}}
+            </p>
+        </section>
+    </ng-container>
+
+
+    <app-footer [data]="themeData"></app-footer>
+</ng-container>
+
+<section class="loader-container ff-flex-center" *ngIf="dataLoading">
+    <img src="../../assets/images/loading_animation.gif" alt="loading" width="200px">
+</section>

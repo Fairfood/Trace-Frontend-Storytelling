@@ -1,0 +1,138 @@
+@import 'src/assets/styles/responsive';
+
+%active-image {
+  height: 120px;
+  width: 120px;
+  @include devices(mobile-xs) {
+    height: 150px;
+    width: 150px;
+  }
+  @include devices(laptop-lg) {
+    height: 180px;
+    width: 180px;
+  }
+
+  img {
+    height: 118px;
+    width: 118px;
+    @include devices(mobile-xs) {
+      height: 148px;
+      width: 148px;
+    }
+    @include devices(laptop-lg) {
+      height: 178px;
+      width: 178px;
+    }
+  }
+}
+
+.product-wrapper {
+  .image-gallery-ff {
+    height: 120px !important;
+  }
+}
+
+.slider-wrapper {
+  .image-gallery-ff {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0;
+    position: relative;
+    height: 120px;
+    justify-content: center;
+    @include devices(mobile-xs) {
+      height: 150px;
+    }
+    @include devices(laptop-lg) {
+      height: 180px;
+    }
+    li {
+      position: relative;
+      min-width: 100px;
+      @include devices(laptop-lg) {
+        min-width: 110px;
+      }
+      &.image-right,
+      &.image-left {
+        z-index: 2;
+        img {
+          border-radius: 50%;
+          height: 90px;
+          width: 90px;
+          opacity: 0.5;
+          @include devices(mobile-xs) {
+            height: 110px;
+            width: 110px;
+          }
+        }
+      }
+      &.active {
+        position: absolute;
+        z-index: 8;
+        background-color: var(--color-white);
+        border-radius: 50%;
+        @extend %active-image;
+        img {
+          border-radius: 50%;
+          border: 2px solid var(--color-white);
+          object-fit: cover;
+        }
+      }
+
+      &.single {
+        left: 40px;
+        @include devices(laptop-lg) {
+          left: 20px;
+        }
+      }
+      &.product {
+        left: auto;
+        position: relative;
+        height: 100px;
+        width: 100px;
+        img {
+          height: 98px;
+          width: 98px;
+        }
+      }
+    }
+  }
+
+  .image-data {
+    justify-content: center;
+    align-items: center;
+    .font-section-heading,
+    .font-normal {
+      min-width: 150px;
+      width: 150px;
+      text-align: center;
+      color: var(--color-text-primary);
+      @include devices(mobile-xs) {
+        width: 230px;
+      }
+      @include devices(mobile-se) {
+        width: 240px;
+      }
+     
+    }
+    .font-normal {
+      font-size: 13px;
+      @include devices(laptop-lg) {
+        font-size: 14px;
+      }
+    }
+  }
+  .navigation-slider {
+    margin-top: 10px;
+
+    .material-icons {
+      font-size: 36px;
+      cursor: pointer;
+      @include devices(laptop-xlg) {
+        font-size: 42px;
+      }
+    }
+  }
+}

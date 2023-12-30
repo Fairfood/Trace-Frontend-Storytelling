@@ -1,0 +1,161 @@
+@import './responsive';
+// Font Moderat
+@font-face {
+  font-family: 'Moderat Regular';
+  src: url('../fonts/Moderat-Regular.woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Moderat Medium';
+  src: url('../fonts/Moderat-Medium.woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Moderat Bold';
+  src: url('../fonts/Moderat-Bold.woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.font-normal {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Moderat Regular', sans-serif;
+  color: var(--color-text-primary);
+  @include devices(tablet-md) {
+    font-size: 15px;
+  }
+  @include devices(laptop) {
+    font-size: 16px;
+  }
+  @include devices(laptop-xlg) {
+    font-size: 17px;
+  }
+  @include devices(desktop) {
+    font-size: 20px;
+  }
+}
+
+.traced-by-text {
+  font-family: 'Moderat Regular', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-text-primary);
+  @include devices(tablet-md) {
+    font-size: 13px;
+  }
+  @include devices(laptop) {
+    font-size: 14px;
+  }
+  @include devices(laptop-xlg) {
+    font-size: 16px;
+  }
+  @include devices(desktop) {
+    font-size: 18px;
+  }
+}
+
+.font-heading {
+  font-family: 'Moderat Bold', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--color-text-primary);
+  @include devices(laptop) {
+    font-size: 32px;
+  }
+
+  @include devices(laptop-lg) {
+    font-size: 36px;
+  }
+
+  @include devices(laptop-xlg) {
+    font-size: 38px;
+  }
+  @include devices(desktop) {
+    font-size: 42px;
+  }
+}
+.font-subheading {
+  font-family: 'Moderat Regular', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-text-primary);
+  @include devices(laptop) {
+    font-size: 24px;
+  }
+
+  @include devices(laptop-xlg) {
+    font-size: 28px;
+  }
+  @include devices(desktop) {
+    font-size: 32px;
+  }
+}
+.font-paragraph {
+  font-family: 'Moderat Regular', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  @include devices(tablet-md) {
+    font-size: 15px;
+  }
+  @include devices(laptop) {
+    font-size: 16px;
+  }
+  @include devices(laptop-xlg) {
+    font-size: 18px;
+  }
+  @include devices(desktop) {
+    font-size: 20px;
+  }
+}
+
+.font-section-heading {
+  font-family: 'Moderat Bold', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: capitalize;
+  @include devices(tablet-md) {
+    font-size: 17px;
+  }
+  @include devices(laptop) {
+    font-size: 18px;
+  }
+  @include devices(laptop-xlg) {
+    font-size: 20px;
+  }
+  @include devices(desktop) {
+    font-size: 22px;
+  }
+}
+
+.claim-name {
+  font-size: 16px;
+  text-transform: capitalize;
+  @include devices(tablet-md) {
+    font-size: 18px;
+  }
+  @include devices(laptop) {
+    font-size: 24px;
+  }
+  @include devices(laptop-xlg) {
+    font-size: 26px;
+  }
+  @include devices(desktop) {
+    font-size: 32px;
+  }
+}
+
+.font-regular {
+  font-family: 'Moderat Regular', sans-serif;
+}
+.font-medium {
+  font-family: 'Moderat Medium', sans-serif;
+}
+.font-bold {
+  font-family: 'Moderat Bold', sans-serif;
+}

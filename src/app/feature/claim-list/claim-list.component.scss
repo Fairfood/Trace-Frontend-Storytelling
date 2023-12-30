@@ -1,0 +1,88 @@
+@import 'src/assets/styles/responsive';
+@import 'src/assets/styles/utils';
+
+.claim-wrap {
+  margin: 0;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 10px 25px;
+  padding-bottom: 0;
+  @include devices(mobile-xs) {
+    padding: 10px 25px;
+  }
+  @include devices(tablet) {
+    width: 100%;
+    padding: 10px 25px 0 25px;
+  }
+  @include devices(tablet-md) {
+    padding: 0;
+  }
+  &.single {
+    @include devices(tablet-md) {
+      width: 100%;
+    }
+  }
+  &.two-plus {
+    @include devices(tablet-md) {
+      width: 60%;
+    }
+    @include devices(laptop) {
+      width: 100%;
+    }
+  }
+
+  li {
+    padding: 5px;
+    background-color: var(--color-white);
+    color: var(--color-text-primary);
+    margin: 5px 15px 5px 0;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--color-primary-shade1);
+
+    @include devices(laptop) {
+      margin: 20px 20px 0 0;
+    }
+
+    &.primary {
+      background-color: var(--color-primary-shade1);
+      padding-right: 10px;
+      margin-bottom: 0;
+      margin-top: 0;
+      .claim-icon {
+        border: 2px solid var(--color-white);
+      }
+    }
+
+    &.more {
+      background-color: var(--color-primary-shade1);
+      height: 40px !important;
+      width: 40px;
+      cursor: pointer;
+      @include devices(tablet) {
+        height: 50px !important;
+        width: 50px;
+      }
+    }
+    .claim-icon {
+      margin-right: 10px;
+      height: 40px !important;
+      width: 40px;
+      background-color: var(--color-primary-shade1);
+      @include devices(laptop-lg) {
+        height: 50px !important;
+        width: 50px;
+      }
+    }
+    .claim {
+      max-width: 220px;
+      @include devices(laptop) {
+        max-width: 280px;
+      }
+    }
+    .supporting-icon {
+      margin-left: 10px;
+      padding-top: 5px;
+    }
+  }
+}

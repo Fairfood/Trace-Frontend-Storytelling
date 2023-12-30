@@ -1,0 +1,40 @@
+<section class="slider-wrapper" [ngClass]="{'product-wrapper': isProduct}">
+    <ul class="image-gallery-ff">
+        <li class="ff-flex-center image-left">
+            <img [src]="imageArray[activeLeft]?.imageUrl" (error)="onImgError($event)" alt="slider-image" *ngIf="activeLeft!==-1">
+        </li>
+        <li class="ff-flex-center active"
+            [ngClass]="{'product': isProduct, 'single': activeLeft === -1 && activeRight === -1}">
+            <img [src]="imageArray[active]?.imageUrl" alt="slider-image" (error)="onImgError($event)">
+        </li>
+        <li class="ff-flex-center image-right">
+            <img [src]="imageArray[activeRight]?.imageUrl" alt="slider-image" (error)="onImgError($event)" *ngIf="activeRight!==-1">
+        </li>
+    </ul>
+    <aside class="ff-flex-between navigation-slider">
+        <span class="material-icons" (click)="changeImage('previous')">
+            <ng-container *ngIf="imageArray.length > 1">
+                chevron_left
+            </ng-container>
+        </span>
+        <article class="ff-flex-column image-data">
+            <span class="font-section-heading" [ngClass]="{'text-overflow': !isProduct}" #imageTitle
+                [matTooltip]="(imageTitle.scrollWidth > imageTitle.clientWidth) ? imageArray[active]?.title : ''">
+                {{imageArray[active]?.title}}
+            </span>
+            <p class="font-normal"
+                [ngClass]="{'text-overflow': !isProduct}"
+            #imageSubTitle
+                [matTooltip]="(imageSubTitle.scrollWidth > imageSubTitle.clientWidth) ? imageArray[active]?.subTitle : ''">
+                {{imageArray[active]?.subTitle}}
+            </p>
+        </article>
+        <span class="material-icons" (click)="changeImage('next')">
+
+            <ng-container *ngIf="imageArray.length > 1">
+                chevron_right
+            </ng-container>
+        </span>
+    </aside>
+
+</section>

@@ -1,0 +1,94 @@
+// Import the responsive.scss file to define breakpoints and media query mixins
+
+@import 'src/assets/styles/responsive';
+@import 'src/assets/styles/utils';
+
+
+.desc {
+  padding-bottom: 30px;
+}
+.evidence {
+  padding: 17px 0;
+}
+.evidence-box {
+  margin-top: 10px;
+  padding: 20px 0;
+  .evidence-list {
+    @extend %reset-ul;
+    display: flex;
+    flex-wrap: wrap;
+    @extend %row-column;
+
+    li {
+      padding: 5px 12px;
+      border: 1px solid var(--color-stroke);
+      margin: 10px 10px 10px 0;
+      min-width: 200px;
+
+      .material-icons {
+        margin-right: 10px;
+        height: 45px !important;
+        width: 45px;
+        background-color: var(--color-primary-shade1);
+      }
+    }
+  }
+}
+.logo-popup {
+  max-height: 80px;
+}
+
+.claim-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding-bottom: 20px;
+  @include devices(tablet-md) {
+    flex-direction: row-reverse;
+  }
+
+  .claim {
+    width: 100%;
+    margin-top: 15px;
+    @include devices(tablet-md) {
+      width: 40%;
+      margin-top: 0;
+    }
+  }
+  .banner {
+    width: 100%;
+    @include devices(tablet-md) {
+      margin-left: 10px;
+      width: 60%;
+      height: 400px;
+      object-fit: contain;
+    }
+  }
+}
+
+.img-container {
+  margin-right: 10px;
+}
+.intervention {
+  padding: 15px 0;
+ 
+}
+.footer {
+  background-color: var(--color-primary-shade2);
+  padding: 25px;
+  @extend %row-column;
+
+  .visit {
+    text-decoration: underline;
+    @include devices(tablet-md) {
+      margin-left: 10px;
+    }
+    a {
+      text-decoration: none;
+      outline: none;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

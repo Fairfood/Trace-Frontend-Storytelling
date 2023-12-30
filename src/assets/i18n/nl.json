@@ -1,0 +1,53 @@
+{
+  "loaderText": "Bevoorradingsketen laden...",
+  "shareButton": "Verhaal delen",
+  "viewEvidenceText": "Bekijk bewijs",
+  "blockChainText": "Blockchain-transactie bekijken",
+  "transactionCountText": "Transactie",
+  "transactionsText": "Transacties",
+  "brokenLinkText": "We kunnen de pagina die u zoekt niet vinden. Controleer de url of neem contact op met ons ondersteuningsteam.",
+  "404Text": "Fout (404)",
+  "viewBlock": "Blockchain bekijken",
+  "blockchain": {
+    "heading": "Blockchain informatie",
+    "hash": "Transactie hash",
+    "inProgress": "Blockchain loggen bezig...",
+    "additionalHeading": "Extra informatie",
+    "copy": "gekopieerd",
+    "name": "{{actor}} naam",
+    "address": "{{actor}} adres",
+    "sellerText": "Verkoper",
+    "buyerText": "Koper"
+  },
+  "claim": {
+    "heading": "Bewijs",
+    "uploadedBy": "{{uploadedBy}} geüpload deze bewijzen",
+    "attachment": "Bijlagen",
+    "viewFileText": "Bestand bekijken",
+    "viewEvidenceText": "Bekijk bewijzen",
+    "docHeader": "Bestandsviewer",
+    "download": "Om bewijs te downloaden",
+    "clickHere": "Klik hier",
+    "evidenceProvided": "Bewijs geleverd door",
+    "intervention": "Interventie",
+    "interventionTextSingle": "Interventie",
+    "interventionTextPlural": "Interventies"
+  },
+  "social": {
+    "caption": "Deel onze productreis met je vrienden en familie.",
+    "copyLinkText": "Of kopieer de link om te delen",
+    "findUs": "Vind ons op sociale media",
+    "copy": "Kopiëren",
+    "copied": "gekopieerd!"
+  },
+  "productText": "producten",
+  "productTextSingle": "product",
+  "moreDetails": "Meer details",
+  "lessDetails": "Minder details",
+  "otherSource": "Andere Origin",
+  "otherSources": "Andere Origines",
+  "stockFromText": "koopt ook producten in uit",
+  "sourceFFText": "Herkomst van deze voorraden wordt niet gespecificeerd in het Trace platform.",
+  "viewMoreText": "Bekijk meer",
+  "and": "en"
+}

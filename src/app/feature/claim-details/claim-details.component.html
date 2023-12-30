@@ -1,0 +1,92 @@
+<!-- all translations can be found in assets/i18n -->
+
+<div class="dialog-container" role="dialog" aria-labelledby="modalHeader">
+    <!-- Header section with logo and close button -->
+    <section class="header ff-flex-between" id="modalHeader" role="banner">
+        <h2 class="font-normal ff-flex-start" aria-label="It contains the brand logo">
+            <!-- Brand logo -->
+            <img [src]="data?.logo" alt="It is the logo of the brand shown" class="logo-popup">
+        </h2>
+        <!-- Brand logo -->
+        <span class="material-icons cursor-pointer" (click)="close()" aria-label="close button">close</span>
+    </section>
+    <!-- Claim content section -->
+    <section class="claim-content" [ngClass]="{'border-b': data?.evidences?.length}" aria-label="Claim details">
+        <!-- Banner image -->
+        <img [src]="data?.theme_image || data?.banner" alt="It is the brand banner image" class="banner">
+        <article class="claim ff-flex-column">
+            <!-- Banner image -->
+            <h2 class="claim-name font-bold" id="claim-name">{{data.name}}</h2>
+            <!-- Claim description -->
+            <p class="desc font-normal text-color" id="claim-description">{{ data?.description_full }}</p>
+        </article>
+
+    </section>
+
+    <section class="evidence-box border-b" *ngIf="data?.evidences?.length" aria-label="Claim evidences">
+        <!-- Evidence heading -->
+        <span class="font-section-heading" aria-label="claim heading">
+            {{'claim.heading'|translate}}
+        </span>
+        <ng-container *ngFor="let item of data?.evidences">
+            <ul class="evidence-list" *ngIf="item.fields?.length" aria-label="normal text evidences">
+                <ng-container *ngFor="let field of item.fields">
+                    <li class="font-normal ff-flex-column">
+                        <p class="key">
+                            {{field?.title}}
+                        </p>
+                        <p class="font-normal">
+                            {{field?.res}}
+                        </p>
+                    </li>
+                </ng-container>
+            </ul>
+            <ul class="evidence-list" *ngIf="item.files?.length" aria-label="File evidences">
+                <ng-container *ngFor="let field of item.files">
+                    <li class="font-normal ff-flex-start cursor-pointer" (click)="viewFile(field)">
+                        <span class="img-container ff-flex-center">
+                            <img src="../../assets/images/doc.svg" alt="it is a document icon with a background color">
+                        </span>
+                        {{field?.title}}
+                    </li>
+                </ng-container>
+            </ul>
+        </ng-container>
+    </section>
+
+    <!-- Special case for tokononga  -->
+    <aside class="evidence border-b" *ngIf="data.method === 2" aria-label="Special case for tokononga">
+        <span class="font-paragraph cursor-pointer" (click)="goToMapSection()">
+            {{'claim.viewEvidenceText'|translate}}
+        </span>
+    </aside>
+
+    <!-- Intervention section -->
+
+    <section class="intervention" *ngIf="interventions?.length" aria-label="Intervention list">
+        <!-- Intervention heading -->
+        <span class="font-section-heading">
+            <ng-container [ngTemplateOutlet]="interventionTexts"></ng-container> ({{ interventions?.length }})
+        </span>
+        <app-list-with-image [data]="interventions"></app-list-with-image>
+        
+    </section>
+
+    <section class="footer ff-flex-center" *ngIf="data?.external_link" aria-label="More details link">
+        <span class="font-paragraph">
+            Still want to learn more?
+        </span>
+        <span class="font-paragraph visit color-primary">
+            <a [href]="data?.external_link" target="_blank" class="color-primary">Visit our website</a>
+        </span>
+    </section>
+</div>
+
+<ng-template #interventionTexts>
+    <ng-container *ngIf="interventions?.length > 1; else singleProduct">
+        {{ 'claim.interventionTextPlural' | translate }}
+    </ng-container>
+    <ng-template #singleProduct>
+        {{ 'claim.interventionTextSingle' | translate }}
+    </ng-template>
+</ng-template>

@@ -1,0 +1,6 @@
+<aside class="image-bg-loading" *ngIf="showImagePlaceholder" aria-hidden="true"></aside>
+<article class="text" [ngClass]="{'quarter-width': showQuarterWidth}">
+    <ng-container *ngFor="let item of rows | generateArray">
+        <article class="text-line" [ngStyle]="{'height': lineHeight}"></article>
+    </ng-container>
+</article>

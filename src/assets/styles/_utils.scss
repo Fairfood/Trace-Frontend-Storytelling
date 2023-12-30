@@ -1,0 +1,62 @@
+@import './responsive';
+
+@mixin timeline-before-after() {
+  &::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-white);
+    border-radius: 50%;
+    top: 35px;
+    left: -35px;
+    z-index: 8888;
+    border: 1px solid var(--color-stroke);
+    box-shadow: 0 0 0 8px var(--color-stroke), 0 0 0 8px var(--color-white);
+    @include devices(tablet-md) {
+      left: -30px;
+      top: 35px;
+    }
+    @include devices(laptop-xlg) {
+      left: -35px;
+    }
+  }
+
+  &::after {
+    content: '';
+    background: var(--color-stroke);
+    display: inline-block;
+    position: absolute;
+    top: 60%;
+    left: -31px;
+    width: 3px;
+    height: 100%;
+    z-index: 400;
+    @include devices(tablet-md) {
+      top: 48%;
+      left: -26px;
+    }
+
+    @include devices(laptop-xlg) {
+      top: 45%;
+      left: -31px;
+    }
+  }
+}
+
+@mixin set-width-height($width, $height) {
+  height: $height;
+  width: $width;
+}
+// Define a placeholder for flex-direction switching between column and row
+%row-column {
+  flex-direction: column;
+  @include devices(tablet-md) {
+    flex-direction: row;
+  }
+}
+
+%reset-ul {
+  margin: 0;
+  padding: 0;
+}

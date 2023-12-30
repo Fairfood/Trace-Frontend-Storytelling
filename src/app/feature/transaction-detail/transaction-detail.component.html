@@ -1,0 +1,236 @@
+<div class="details-container ff-flex-column">
+    <!-- Farmer Section -->
+    <section class="farmer-section ff-flex-between">
+        <aside class="images ff-flex-center" aria-label="Farmer Details">
+            <!-- Image Carousel Component -->
+            <app-image-carousal [imageArray]="imagesUrl" (currentActiveIndex)="changeFarmer($event)"
+                aria-label="Image Carousel">
+            </app-image-carousal>
+        </aside>
+        <!-- Profile Details -->
+        <aside class="profile ff-flex-column" aria-label="Selected farmer details">
+            <h3 class="font-section-heading" id="farmer-name">
+                {{selectedFarmer?.name}}
+            </h3>
+            <div class="flexible-content">
+                <article class="profile-items first">
+                    <ng-container [ngTemplateOutlet]="svgLocation"></ng-container>
+
+                    <span class="font-normal" aria-labelledby="farmer-location">
+                        {{selectedFarmer?.province}}, {{selectedFarmer?.country}}
+                    </span>
+                </article>
+                <article class="items">
+                    <span class="profile-items">
+                        <ng-container [ngTemplateOutlet]="svgQuantity"></ng-container>
+                        <span class="font-normal" aria-labelledby="transaction-quantity">
+                            {{selectedFarmer?.transaction_quantity}} kg
+                        </span>
+                    </span>
+                    <span class="profile-items tran" *ngIf="!loading">
+                        <ng-container [ngTemplateOutlet]="svgTransaction"></ng-container>
+                        <span class="font-normal" aria-labelledby="transaction-count">
+                            {{selectedFarmer?.count}}
+                            <ng-container [ngTemplateOutlet]="transactionText"></ng-container>
+                        </span>
+                    </span>
+                </article>
+            </div>
+            <ul class="company-claim ff-flex-start" role="list" *ngIf="selectedFarmer?.claims?.length">
+                <li class="cursor-pointer ff-flex-start font-medium" role="listitem"
+                    *ngFor="let item of selectedFarmer?.claims" (click)="openClaimDialog(item)">
+                    <span class="material-icons">check_circle</span>
+                    <span class="font-normal">
+                        {{item.name}}
+                    </span>
+                </li>
+            </ul>
+            <!-- Selected farmer description max length 250 -->
+            <p class="font-normal desc" id="farmer-description">
+                {{ selectedFarmer?.description_basic | truncateText: 250 }}
+            </p>
+        </aside>
+    </section>
+    <section class="transaction-section" aria-label="Transaction Details">
+        <aside class="product" aria-label="Product details">
+            <h3 class="font-section-heading" id="product-heading">
+                <ng-container [ngTemplateOutlet]="productHeading"></ng-container>
+            </h3>
+            <ul role="list">
+                <ng-container *ngFor="let prod of selectedFarmer?.products; let i=index">
+                    <li class="content"
+                        [ngClass]="{'timeline-product': selectedFarmer?.products.length>1, 'active': i===0}"
+                        role="listitem">
+                        <span class="img-round">
+                            <img [src]="prod.image_url || '../../assets/images/product_placeholder.png'"
+                                (error)="onImgError($event)"
+                                alt="it will show a product image or a default product placeholder image" role="img">
+                        </span>
+                        <aside class="w-100" aria-label="Name">
+                            <article class="ff-flex-between">
+                                <h3 class="font-section-heading text-overflow"
+                                    attr.aria-labelledby="product-name-{{i}}">
+                                    {{ (prod?.theme_name || prod?.name) | truncateText: 30 }}
+                                </h3>
+                                <span class="ff-flex-center sub-text"
+                                    attr.aria-labelledby="product-direction-{{i}}">
+                                    <span class="traced-by-text">
+                                        {{prod.direction}}
+                                    </span>
+                                    <span class="material-icons">
+                                        {{prod?.direction === 'Outgoing'?'arrow_forward':'arrow_back'}}
+                                    </span>
+                                </span>
+                            </article>
+                            <p class="font-normal prod-desc" attr.aria-labelledby="product-description-{{i}}">
+                                {{ (prod?.theme_description || prod?.description) | truncateText: 200 }}
+                            </p>
+                        </aside>
+                        <span class="arrow-up-stage" [ngClass]="{'hide': i===0}"></span>
+                    </li>
+                </ng-container>
+            </ul>
+        </aside>
+        <section class="mobile-product" *ngIf="isMobile">
+            <h3 class="font-section-heading">
+                <ng-container [ngTemplateOutlet]="productHeading"></ng-container>
+            </h3>
+            <app-image-carousal [isProduct]="true" [imageArray]="productSlider"
+                aria-label="Mobile view:  Product Image Carousel">
+            </app-image-carousal>
+        </section>
+        <aside class="transaction" aria-label="">
+            <h3 class="font-section-heading main" *ngIf="!loading" id="transaction-text">
+                <ng-container [ngTemplateOutlet]="transactionText"></ng-container>
+            </h3>
+            <ul *ngIf="!loading" role="list">
+                <li *ngFor="let trans of selectedFarmer?.transactionData" role="listitem">
+                    <article class="ff-flex-between">
+                        <h3 class="font-section-heading" id="transaction-product-name-{{trans.id}}">
+                            {{ trans?.product_name | truncateText: 30 }}
+                        </h3>
+                        <span class="ff-flex-center sub-text" (click)="openDialog(trans)" *ngIf="!isMobile"
+                            tabindex="0" role="button" aria-label="View block chain details">
+                            <span class="traced-by-text view-block">
+                                {{'viewBlock'|translate}}
+                            </span>
+                            <span class="material-icons">
+                                arrow_forward
+                            </span>
+                        </span>
+                    </article>
+
+                    <p class="traced-by-text" id="transaction-title-{{trans.id}}">
+                        {{trans?.tittle || trans?.title}}
+                    </p>
+                    <aside class="ff-flex-start tr-qty" aria-label="transaction quantity">
+                        <span class="qty font-normal ff-flex-start">
+                            <ng-container [ngTemplateOutlet]="svgQuantity"></ng-container>
+                            <span attr.aria-labelledby="transaction-quantity-{{trans.id}}">
+                                {{ trans?.source_quantity ?? trans?.quantity }} kg
+                            </span>
+                        </span>
+                        <span class="qty font-normal ff-flex-start">
+                            <ng-container [ngTemplateOutlet]="svgDate"></ng-container>
+                            <span attr.aria-labelledby="transaction-date-{{trans.id}}">
+                                {{ trans?.date * 1000 | date: 'dd MMMM y' }}
+                            </span>
+                        </span>
+                    </aside>
+                    <p class="ff-flex-start sub-text" (click)="openDialog(trans)" *ngIf="isMobile" tabindex="0"
+                        role="button" aria-label="View blockchain details">
+                        <span class="traced-by-text">
+                            {{'viewBlock'|translate}}
+                        </span>
+                        <span class="material-icons">
+                            arrow_forward
+                        </span>
+                    </p>
+                </li>
+                <li *ngIf="selectedFarmer?.count > 20" aria-label="More Transactions">
+                    <p class="traced-by-text">
+                        And +{{selectedFarmer?.count-20}} more . . .
+                    </p>
+                </li>
+            </ul>
+            <div class="wrapper ff-flex-column" *ngIf="loading" aria-label="Loading Placeholder">
+                <app-placeholder-loader [rows]="2"></app-placeholder-loader>
+            </div>
+        </aside>
+    </section>
+</div>
+
+<ng-template #svgLocation>
+    <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="fill-text-color" cx="8" cy="8" r="8" fill="#334739" />
+        <path
+            d="M11 7.15C11 6.73634 10.9224 6.32672 10.7716 5.94455C10.6209 5.56237 10.3999 5.21512 10.1213 4.92261C9.84274 4.63011 9.51203 4.39808 9.14805 4.23978C8.78407 4.08148 8.39397 4 8 4C7.60603 4 7.21593 4.08148 6.85195 4.23978C6.48797 4.39808 6.15726 4.63011 5.87868 4.92261C5.6001 5.21512 5.37913 5.56237 5.22836 5.94455C5.0776 6.32672 5 6.73634 5 7.15C5 7.77415 5.17571 8.35465 5.47357 8.84425H5.47014C6.48157 10.507 8 13 8 13L10.5299 8.84425H10.5269C10.8356 8.33862 10.9998 7.75063 11 7.15ZM8 8.5C7.65901 8.5 7.33198 8.35777 7.09086 8.10459C6.84974 7.85142 6.71429 7.50804 6.71429 7.15C6.71429 6.79196 6.84974 6.44858 7.09086 6.19541C7.33198 5.94223 7.65901 5.8 8 5.8C8.34099 5.8 8.66802 5.94223 8.90914 6.19541C9.15026 6.44858 9.28571 6.79196 9.28571 7.15C9.28571 7.50804 9.15026 7.85142 8.90914 8.10459C8.66802 8.35777 8.34099 8.5 8 8.5Z"
+            fill="white" />
+    </svg>
+</ng-template>
+<ng-template #svgQuantity>
+    <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="fill-text-color" cx="8" cy="8" r="8" fill="#334739" />
+        <path
+            d="M12.9744 10.414L11.406 6.23168C11.3366 6.04678 11.137 5.92152 10.9118 5.92152H9.25659C9.39076 5.73032 9.46947 5.50709 9.46947 5.26774C9.46947 4.56875 8.81022 4 7.99998 4C7.18975 4 6.53049 4.56874 6.53049 5.26774C6.53049 5.50708 6.6092 5.73031 6.74338 5.92152H5.08823C4.86297 5.92152 4.66338 6.04678 4.59403 6.23168L3.0256 10.414C2.91706 10.7034 3.16721 11 3.5198 11H12.4802C12.8328 11 13.0829 10.7034 12.9744 10.414ZM7.22307 5.26774C7.22307 4.89811 7.57155 4.59748 7.99999 4.59748C8.42844 4.59748 8.77692 4.89811 8.77692 5.26774C8.77692 5.5878 8.51524 5.8553 8.167 5.92152H7.833C7.48475 5.85532 7.22307 5.5878 7.22307 5.26774ZM7.3131 9.54444L6.86416 8.80077H6.65024V9.54444H6.13014V7.71114H6.65024V8.4189H6.86416L7.30415 7.71114H7.86294L7.28913 8.58801V8.59323L7.8956 9.54444H7.3131ZM10.0485 9.54444H9.61457V9.49308C9.61457 9.45465 9.61748 9.41625 9.61748 9.41625H9.61168C9.61168 9.41625 9.40645 9.57513 9.05289 9.57513C8.50887 9.57513 8.00959 9.22396 8.00959 8.62392C8.00959 8.09069 8.47617 7.68043 9.12427 7.68043C9.66807 7.68043 9.94155 7.92389 9.94155 7.92389L9.69179 8.25982C9.69179 8.25982 9.47494 8.0907 9.17463 8.0907C8.72885 8.0907 8.54759 8.33686 8.54759 8.60847C8.54759 8.95735 8.82687 9.16488 9.15697 9.16488C9.40648 9.16488 9.58772 9.03168 9.58772 9.03168V8.89054H9.28764V8.50847H10.0485V9.54444Z"
+            fill="white" />
+    </svg>
+</ng-template>
+<ng-template #svgTransaction>
+    <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="fill-text-color" cx="8" cy="8" r="8" fill="#334739" />
+        <path
+            d="M4.82188 6.33754L4.82188 6.43754L4.92188 6.43754L10.0036 6.43754L9.01623 7.48508C8.88379 7.62558 8.88379 7.85107 9.01623 7.99158C9.15183 8.13544 9.37428 8.13544 9.50988 7.99158L11.0764 6.32965C11.2088 6.18914 11.2088 5.96365 11.0764 5.82315L9.50988 4.16122C9.37428 4.01735 9.15183 4.01735 9.01623 4.16122C8.88379 4.30172 8.88379 4.52721 9.01623 4.66772L10.0036 5.71525L4.92188 5.71525L4.82188 5.71525L4.82188 5.81525L4.82188 6.33754Z"
+            fill="white" stroke="white" stroke-width="0.2" />
+        <path
+            d="M11.1742 9.66148L11.1742 9.56148L11.0742 9.56148L5.99247 9.56148L6.97987 8.51395C7.1123 8.37344 7.1123 8.14795 6.97987 8.00745C6.84426 7.86358 6.62182 7.86358 6.48621 8.00745L4.9197 9.66938C4.78726 9.80988 4.78726 10.0354 4.9197 10.1759L6.48621 11.8378C6.62182 11.9817 6.84426 11.9817 6.97987 11.8378C7.1123 11.6973 7.1123 11.4718 6.97987 11.3313L5.99247 10.2838L11.0742 10.2838L11.1742 10.2838L11.1742 10.1838L11.1742 9.66148Z"
+            fill="white" stroke="white" stroke-width="0.2" />
+    </svg>
+</ng-template>
+
+<ng-template #svgDate>
+    <svg width="40" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse class="fill-text-color" cx="8" cy="8.0755" rx="8" ry="8.0755" fill="#334739" />
+        <g clip-path="url(#clip0_1051_4361)">
+            <path
+                d="M11.0625 4.26562H10.6875V3.64062H10.0625V4.26562H5.9375V3.64062H5.3125V4.26562H4.9375C4.42056 4.26562 4 4.68619 4 5.20312V10.7031C4 11.2201 4.42056 11.6406 4.9375 11.6406H11.0625C11.5794 11.6406 12 11.2201 12 10.7031V5.20312C12 4.68619 11.5794 4.26562 11.0625 4.26562ZM11.375 10.7031C11.375 10.8754 11.2348 11.0156 11.0625 11.0156H4.9375C4.76519 11.0156 4.625 10.8754 4.625 10.7031V6.57812H11.375V10.7031ZM11.375 5.95312H4.625V5.20312C4.625 5.03081 4.76519 4.89062 4.9375 4.89062H5.3125V5.51562H5.9375V4.89062H10.0625V5.51562H10.6875V4.89062H11.0625C11.2348 4.89062 11.375 5.03081 11.375 5.20312V5.95312Z"
+                fill="white" />
+            <path d="M5.8125 7.23438H5.1875V7.85938H5.8125V7.23438Z" fill="white" />
+            <path d="M7.0625 7.23438H6.4375V7.85938H7.0625V7.23438Z" fill="white" />
+            <path d="M8.3125 7.23438H7.6875V7.85938H8.3125V7.23438Z" fill="white" />
+            <path d="M9.5625 7.23438H8.9375V7.85938H9.5625V7.23438Z" fill="white" />
+            <path d="M10.8125 7.23438H10.1875V7.85938H10.8125V7.23438Z" fill="white" />
+            <path d="M5.8125 8.48438H5.1875V9.10938H5.8125V8.48438Z" fill="white" />
+            <path d="M7.0625 8.48438H6.4375V9.10938H7.0625V8.48438Z" fill="white" />
+            <path d="M8.3125 8.48438H7.6875V9.10938H8.3125V8.48438Z" fill="white" />
+            <path d="M9.5625 8.48438H8.9375V9.10938H9.5625V8.48438Z" fill="white" />
+            <path d="M5.8125 9.73438H5.1875V10.3594H5.8125V9.73438Z" fill="white" />
+            <path d="M7.0625 9.73438H6.4375V10.3594H7.0625V9.73438Z" fill="white" />
+            <path d="M8.3125 9.73438H7.6875V10.3594H8.3125V9.73438Z" fill="white" />
+            <path d="M9.5625 9.73438H8.9375V10.3594H9.5625V9.73438Z" fill="white" />
+            <path d="M10.8125 8.48438H10.1875V9.10938H10.8125V8.48438Z" fill="white" />
+        </g>
+        <defs>
+            <clipPath id="clip0_1051_4361">
+                <rect width="8" height="8" fill="white" transform="translate(4 3.64062)" />
+            </clipPath>
+        </defs>
+    </svg>
+</ng-template>
+
+<ng-template #productHeading>
+    <ng-container *ngIf="selectedFarmer?.products.length > 1; else singleProduct">
+        {{ 'productText' | translate }}
+    </ng-container>
+    <ng-template #singleProduct>
+        {{ 'productTextSingle' | translate }}
+    </ng-template>
+</ng-template>
+<ng-template #transactionText>
+    <ng-container *ngIf="selectedFarmer?.transactionData.length > 1">
+        {{'transactionsText'|translate}}
+    </ng-container>
+    <ng-container *ngIf="selectedFarmer?.transactionData.length === 1">
+        {{'transactionCountText'|translate}}
+    </ng-container>
+</ng-template>
