@@ -1,0 +1,18 @@
+<div class="story-ff ff-flex-between" role="article" attr.aria-label="{{ data?.video_title || '' }}">
+    <section class="video-wrapper" aria-label="Video">
+        <iframe class="embed-responsive-item" [src]="videoUrl" allowfullscreen title="videourl"></iframe>
+    </section>
+    <section class="content">
+        <h1 class="font-subheading">{{ data?.video_title || '' }}</h1>
+        <p class="font-normal">{{ data?.video_description }}</p>
+        <aside aria-label="Actions" class="action-button">
+            <button class="button-primary ff-flex-center" (click)="getLink(data?.action_button_url)">
+                {{data?.action_button_text}}&nbsp;
+                <span class="material-icons">east</span>
+            </button>
+            <app-share-button [data]="sharingData"></app-share-button>
+        </aside>
+    </section>
+    <section class="slanting-bg" aria-hidden="true"></section>
+    <section class="bg-stripes" aria-hidden="true"></section>
+</div>

@@ -1,0 +1,116 @@
+<section class="dialog-container" *ngIf="data" [ngStyle]="{'padding-top': notPopup?'10px':'0'}">
+  <div class="header ff-flex-between">
+    <span class="material-icons cursor-pointer arrow" *ngIf="!notPopup" (click)="close()">arrow_back</span>
+    <h2 [ngClass]="notPopup?'font-normal': 'font-subheading'">
+      {{ 'blockchain.heading' | translate }}
+    </h2>
+    <span class="material-icons cursor-pointer close" *ngIf="!notPopup" (click)="close()">close</span>
+  </div>
+  <div class="content ff-flex-wrap">
+    <aside class="product" aria-label="">
+      <h3 class="font-section-heading">
+        {{ data?.product_name | truncateText: 30 }}
+      </h3>
+      <aside class="ff-flex-start" aria-label="">
+        <span class="qty font-normal ff-flex-start">
+          <svg width="40" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="fill-text-color" cx="8" cy="8" r="8" fill="#334739" />
+            <path
+              d="M12.9744 10.414L11.406 6.23168C11.3366 6.04678 11.137 5.92152 10.9118 5.92152H9.25659C9.39076 5.73032 9.46947 5.50709 9.46947 5.26774C9.46947 4.56875 8.81022 4 7.99998 4C7.18975 4 6.53049 4.56874 6.53049 5.26774C6.53049 5.50708 6.6092 5.73031 6.74338 5.92152H5.08823C4.86297 5.92152 4.66338 6.04678 4.59403 6.23168L3.0256 10.414C2.91706 10.7034 3.16721 11 3.5198 11H12.4802C12.8328 11 13.0829 10.7034 12.9744 10.414ZM7.22307 5.26774C7.22307 4.89811 7.57155 4.59748 7.99999 4.59748C8.42844 4.59748 8.77692 4.89811 8.77692 5.26774C8.77692 5.5878 8.51524 5.8553 8.167 5.92152H7.833C7.48475 5.85532 7.22307 5.5878 7.22307 5.26774ZM7.3131 9.54444L6.86416 8.80077H6.65024V9.54444H6.13014V7.71114H6.65024V8.4189H6.86416L7.30415 7.71114H7.86294L7.28913 8.58801V8.59323L7.8956 9.54444H7.3131ZM10.0485 9.54444H9.61457V9.49308C9.61457 9.45465 9.61748 9.41625 9.61748 9.41625H9.61168C9.61168 9.41625 9.40645 9.57513 9.05289 9.57513C8.50887 9.57513 8.00959 9.22396 8.00959 8.62392C8.00959 8.09069 8.47617 7.68043 9.12427 7.68043C9.66807 7.68043 9.94155 7.92389 9.94155 7.92389L9.69179 8.25982C9.69179 8.25982 9.47494 8.0907 9.17463 8.0907C8.72885 8.0907 8.54759 8.33686 8.54759 8.60847C8.54759 8.95735 8.82687 9.16488 9.15697 9.16488C9.40648 9.16488 9.58772 9.03168 9.58772 9.03168V8.89054H9.28764V8.50847H10.0485V9.54444Z"
+              fill="white" />
+          </svg>
+          <span>
+            {{ data?.source_quantity ?? data?.quantity }} kg
+          </span>
+        </span>
+        <span class="qty font-normal ff-flex-start">
+          <svg width="40" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse class="fill-text-color" cx="8" cy="8.0755" rx="8" ry="8.0755" fill="#334739" />
+            <g clip-path="url(#clip0_1051_4361)">
+              <path
+                d="M11.0625 4.26562H10.6875V3.64062H10.0625V4.26562H5.9375V3.64062H5.3125V4.26562H4.9375C4.42056 4.26562 4 4.68619 4 5.20312V10.7031C4 11.2201 4.42056 11.6406 4.9375 11.6406H11.0625C11.5794 11.6406 12 11.2201 12 10.7031V5.20312C12 4.68619 11.5794 4.26562 11.0625 4.26562ZM11.375 10.7031C11.375 10.8754 11.2348 11.0156 11.0625 11.0156H4.9375C4.76519 11.0156 4.625 10.8754 4.625 10.7031V6.57812H11.375V10.7031ZM11.375 5.95312H4.625V5.20312C4.625 5.03081 4.76519 4.89062 4.9375 4.89062H5.3125V5.51562H5.9375V4.89062H10.0625V5.51562H10.6875V4.89062H11.0625C11.2348 4.89062 11.375 5.03081 11.375 5.20312V5.95312Z"
+                fill="white" />
+              <path d="M5.8125 7.23438H5.1875V7.85938H5.8125V7.23438Z" fill="white" />
+              <path d="M7.0625 7.23438H6.4375V7.85938H7.0625V7.23438Z" fill="white" />
+              <path d="M8.3125 7.23438H7.6875V7.85938H8.3125V7.23438Z" fill="white" />
+              <path d="M9.5625 7.23438H8.9375V7.85938H9.5625V7.23438Z" fill="white" />
+              <path d="M10.8125 7.23438H10.1875V7.85938H10.8125V7.23438Z" fill="white" />
+              <path d="M5.8125 8.48438H5.1875V9.10938H5.8125V8.48438Z" fill="white" />
+              <path d="M7.0625 8.48438H6.4375V9.10938H7.0625V8.48438Z" fill="white" />
+              <path d="M8.3125 8.48438H7.6875V9.10938H8.3125V8.48438Z" fill="white" />
+              <path d="M9.5625 8.48438H8.9375V9.10938H9.5625V8.48438Z" fill="white" />
+              <path d="M5.8125 9.73438H5.1875V10.3594H5.8125V9.73438Z" fill="white" />
+              <path d="M7.0625 9.73438H6.4375V10.3594H7.0625V9.73438Z" fill="white" />
+              <path d="M8.3125 9.73438H7.6875V10.3594H8.3125V9.73438Z" fill="white" />
+              <path d="M9.5625 9.73438H8.9375V10.3594H9.5625V9.73438Z" fill="white" />
+              <path d="M10.8125 8.48438H10.1875V9.10938H10.8125V8.48438Z" fill="white" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1051_4361">
+                <rect width="8" height="8" fill="white" transform="translate(4 3.64062)" />
+              </clipPath>
+            </defs>
+          </svg>
+          <span>
+            {{ data?.date * 1000 | date: 'dd MMMM y' }}
+          </span>
+        </span>
+      </aside>
+    </aside>
+    <aside class="ff-flex-column w-100 items" aria-label="Block chain item">
+      <span class="key">{{'blockchain.hash'|translate}}</span>
+      <span class="font-normal">
+        <ng-container [ngTemplateOutlet]="commonWallet"
+          [ngTemplateOutletContext]="{wallet: data?.blockchain_address, type: data?.wallet_type, url: data?.explorer_url}">
+        </ng-container>
+      </span>
+    </aside>
+    <aside aria-label="" class="ff-flex-column w-50 items">
+      <span class="key">{{ 'blockchain.name' | translate:{ actor: 'blockchain.sellerText'|translate} }}</span>
+      <span class="font-normal">
+        {{ data?.source_name ?? data?.source?.name }}
+      </span>
+    </aside>
+    <aside aria-label="" class="ff-flex-column w-50 items">
+      <span class="key">{{ 'blockchain.address' | translate:{ actor: 'blockchain.sellerText'|translate} }}</span>
+      <span class="font-normal">
+        <ng-container [ngTemplateOutlet]="commonWallet"
+          [ngTemplateOutletContext]="{wallet: data?.source_wallet?.public, type: data?.source_wallet?.wallet_type, url: data?.source_wallet?.explorer_url}">
+        </ng-container>
+      </span>
+    </aside>
+    <aside aria-label="" class="ff-flex-column w-50 items">
+      <span class="key">{{ 'blockchain.name' | translate:{ actor: 'blockchain.buyerText'|translate} }}</span>
+      <span class="font-normal">
+        {{ data?.destination_name ?? data?.destination?.name }}
+      </span>
+    </aside>
+    <aside aria-label="" class="ff-flex-column w-50 items">
+      <span class="key">{{ 'blockchain.address' | translate:{ actor: 'blockchain.buyerText'|translate} }}</span>
+      <span class="font-normal">
+        <ng-container [ngTemplateOutlet]="commonWallet"
+          [ngTemplateOutletContext]="{wallet: data?.destination_wallet?.public, type: data?.destination_wallet?.wallet_type, url: data?.destination_wallet?.explorer_url}">
+        </ng-container>
+      </span>
+    </aside>
+  </div>
+</section>
+
+
+<ng-template #commonWallet let-wallet="wallet" let-type="type" let-url="url">
+  <span *ngIf="wallet === ''">{{ 'blockchain.inProgress' | translate }}</span>
+  <ng-container *ngIf="wallet !== ''">
+    <a *ngIf="url" [href]="url" target="_blank" class="ff-flex-start">
+      <img [src]="type === 101 ? '../../assets/images/topl.svg': '../../assets/images/hedra.svg'"
+        class="mr-3 cursor-pointer" alt="" [matTooltip]="type === 101 ? 'Topl': 'Hedra'">
+      <u *ngIf="wallet !== ''">{{(wallet?.length> 20)?
+        (wallet | slice:0:19)+'..':(wallet)}}</u>
+    </a>
+    <aside aria-label="" *ngIf="!url">
+      <img [src]="type === 101 ? '../../assets/images/topl.svg': '../../assets/images/hedra.svg'"
+        class="mr-3 cursor-pointer" alt="" [matTooltip]="type === 101 ? 'Topl': 'Hedra'">
+      <span *ngIf="wallet !== ''">{{(wallet?.length> 20)?
+        (wallet | slice:0:19)+'..':(wallet)}}</span>
+    </aside>
+  </ng-container>
+</ng-template>

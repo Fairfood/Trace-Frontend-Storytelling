@@ -1,0 +1,52 @@
+{
+  "loaderText": "Loading supply chain...",
+  "shareButton": "Share story",
+  "viewEvidenceText": "View evidence",
+  "blockChainText": "View blockchain transaction",
+  "transactionCountText": "Transaction",
+  "transactionsText": "Transactions",
+  "brokenLinkText": "We can’t find the page you’re looking for, Please check the url or contact our support team.",
+  "404Text": "Error (404)",
+  "viewBlock": "View blockchain details",
+  "blockchain": {
+    "heading": "Blockchain information",
+    "hash": "Transaction hash",
+    "inProgress": "Blockchain logging in progress...",
+    "additionalHeading": "Additional information",
+    "copy": "Copied",
+    "name": "{{actor}} name",
+    "address": "{{actor}} address",
+    "sellerText": "Seller",
+    "buyerText": "Buyer"
+  },
+  "claim": {
+    "heading": "Evidence",
+    "uploadedBy": "{{uploadedBy}} uploaded these evidences",
+    "attachment": "Attachments",
+    "viewFileText": "View file",
+    "viewEvidenceText": "View evidences",
+    "docHeader": "File viewer",
+    "download": "To download evidence",
+    "clickHere": "Click here",
+    "evidenceProvided": "Evidence provided by",
+    "interventionTextSingle": "Intervention",
+    "interventionTextPlural": "Interventions"
+  },
+  "social": {
+    "caption": "Share our product journey with your friends and family.",
+    "copyLinkText": "Or copy link to share",
+    "findUs": "Find us on Social Media",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "productText": "products",
+  "productTextSingle": "product",
+  "moreDetails": "More details",
+  "lessDetails": "Less details",
+  "otherSource": "Other origin",
+  "otherSources": "Other origins",
+  "stockFromText": "also buy products in bulk from",
+  "sourceFFText": "Origin of these stocks are not specified in the Trace platform.",
+  "viewMoreText": "View more",
+  "and": "and"
+}

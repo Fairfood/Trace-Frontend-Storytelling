@@ -1,0 +1,34 @@
+.expand-button {
+  width: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .sub-icons {
+    margin-left: 25px;
+
+    svg {
+      color: var(--color-button);
+      width: 35px;
+      height: 35px;
+      padding: 5px;
+      border: 1px solid var(--color-button);
+    }
+    a {
+      margin-right: 12px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.mr-12 {
+  margin-right: 12px;
+}
+
+.normal-button {
+  transition: all ease-out 0.3s;
+}
+.material-icons {
+  color: var(--color-button);
+}

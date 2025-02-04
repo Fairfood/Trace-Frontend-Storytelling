@@ -1,0 +1,116 @@
+<section class="timeline-stage ff-flex-column">
+    <ng-container *ngFor="let item of timelineData; trackBy:trackByFn; let i=index">
+        <aside class="ff-flex-between t-wrapper" aria-label="Timeline Item" *ngIf="item.external_sources?.length">
+            <img src="../../assets/images/other_circle.svg" alt="other" class="other" role="presentation">
+            <article id="stage{{i}}" class="timeline-item small-box other-resource">
+                <article class="stage-icon ff-flex-center">
+                    <img [src]="'../../assets/images/other-source.svg'" alt="this indicates it is an external source"
+                        role="img" aria-label="Stage Icon">
+                </article>
+                <aside class="display-info w-100" aria-label="section">
+                    <article class="title traced-by-text ff-flex-start">
+                        <ng-container *ngIf="item.otherCount>1">{{'otherSources'|translate}}</ng-container>
+                        <ng-container *ngIf="item.otherCount===1">{{'otherSource'|translate}}</ng-container>
+                        ({{item.otherCount}})
+                        <ng-container [ngTemplateOutlet]="infoIcon"></ng-container>
+                    </article>
+                    <article class="desc-wrapper w-100">
+                        <span class="other-desc font-regular"
+                            [ngClass]="{'width-desc': item?.otherDescription?.length>70}">
+                            {{ item?.otherDescription.slice(0, 70) }}
+                        </span>
+                        <ng-container *ngIf="item?.otherDescription?.length>70">
+                            <span class="viewmore font-regular cursor-pointer" (click)="viweMoreDescription(item)"
+                                role="img" aria-label="Stage Icon">
+                                {{'viewMoreText'|translate}}
+                            </span>
+                        </ng-container>
+                    </article>
+                </aside>
+            </article>
+            <span class="arrow-down-stage" [ngClass]="{'hide': i === 0}"></span>
+        </aside>
+        <aside class="ff-flex-between t-wrapper" aria-label="">
+            <span class="double-circle" role="presentation"></span>
+            <article id="stage{{i}}" class="timeline-item large-box cursor-pointer"
+                [ngClass]="{'active': i === activeItem}" (click)="itemSelected(i)">
+                <article class="stage-icon ff-flex-center">
+                    <img [src]="item?.image || '../../assets/images/farmers_placeholder.svg'" alt="stage icon"
+                        role="img" aria-label="Stage Icon">
+                </article>
+                <aside class="display-info w-100" aria-label="details of the actor">
+                    <span class="title traced-by-text">{{ item.tittle }}</span>
+                    <article class="ff-flex-between w-100">
+                        <span class="ff-flex-start">
+                            <span class="actor font-normal" #actorToolTip
+                                [matTooltip]="(actorToolTip.scrollWidth > actorToolTip.clientWidth) ? item.actor_name : ''"
+                                aria-label="Actor Name">
+                                {{ item?.actor_name}}
+                            </span>
+                            <span class="actor-count font-normal ff-flex-center" *ngIf="item?.actors?.length >1"
+                                matTooltip="{{ item?.actorNames?.join(', ') }}" aria-label="Number of Actors">
+                                {{item?.actors.length}}
+                            </span>
+                        </span>
+                        <span class="material-icons nav-icon-stage" aria-hidden="true">
+                            navigate_next
+                        </span>
+                        <span class="arrow-right-stage" aria-hidden="true"></span>
+                    </article>
+                    <span class="product text-overflow"
+                        title="{{item?.stage_products?.length === 1?item?.stage_products[0]:''}}"
+                        aria-label="Stage Products">
+                        <ng-container *ngIf="item?.stage_products?.length === 1">
+                            Product: {{item?.stage_products[0]}}
+                        </ng-container>
+                        <ng-container *ngIf="item?.stage_products?.length > 1">
+                            {{ item?.stage_products?.length }} {{'productText'|translate}}
+                        </ng-container>
+                    </span>
+                </aside>
+            </article>
+            <span class="arrow-down-stage" [ngClass]="{'hide': i === 0}" aria-hidden="true"></span>
+        </aside>
+
+    </ng-container>
+</section>
+
+<ng-template #descTemplate let-data>
+    <section class="heading ff-flex-between">
+        <aside class="ff-flex-start" aria-label="Stage icon">
+            <img [src]="'../../assets/images/other-source.svg'" alt="stage" alt="stage" role="img"
+                aria-label="Stage Icon">
+            <span class="font-normal">{{data.otherCount}}
+                <ng-container *ngIf="data.otherCount>1">{{'otherSources'|translate}}</ng-container>
+                <ng-container *ngIf="data.otherCount===1">{{'otherSource'|translate}}</ng-container>
+            </span>
+        </aside>
+
+        <span class="material-icons cursor-pointer close" (click)="close()" role="button" tabindex="0"
+            aria-label="Close">close</span>
+    </section>
+    <p class="traced-by-text" aria-label="Description">
+        {{data.otherDescription}}
+    </p>
+</ng-template>
+
+<ng-template #infoIcon>
+
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"
+        matTooltip="{{'sourceFFText'|translate}}" matTooltipPosition="above" class="info-icon">
+        <g clip-path="url(#clip0_2_17405)">
+            <path
+                d="M7.02344 0.707031C10.8832 0.707031 14.0234 3.84727 14.0234 7.70707C14.0234 11.5669 10.8832 14.707 7.02344 14.707C3.16364 14.707 0.0234375 11.5669 0.0234375 7.70707C0.0234375 3.84727 3.16364 0.707031 7.02344 0.707031ZM7.02344 13.4343C10.1815 13.4343 12.7507 10.8651 12.7507 7.70707C12.7507 4.54906 10.1815 1.97976 7.02344 1.97976C3.86538 1.97976 1.29616 4.54906 1.29616 7.70707C1.29616 10.8651 3.86542 13.4343 7.02344 13.4343Z" />
+            <path
+                d="M7.02278 3.67578C7.49055 3.67578 7.87109 4.05658 7.87109 4.52465C7.87109 4.99229 7.49055 5.37275 7.02278 5.37275C6.55501 5.37275 6.17446 4.99229 6.17446 4.52465C6.17446 4.05658 6.55501 3.67578 7.02278 3.67578Z" />
+            <path
+                d="M7.02379 6.64453C7.37524 6.64453 7.66016 6.92945 7.66016 7.28089V11.0991C7.66016 11.4505 7.37524 11.7354 7.02379 11.7354C6.67235 11.7354 6.38743 11.4505 6.38743 11.0991V7.28089C6.38743 6.92945 6.67235 6.64453 7.02379 6.64453Z" />
+        </g>
+        <defs>
+            <clipPath id="clip0_2_17405">
+                <rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14.0234 0.707031)" />
+            </clipPath>
+        </defs>
+    </svg>
+
+</ng-template>

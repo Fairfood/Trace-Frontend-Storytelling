@@ -1,0 +1,115 @@
+<footer class="ff-flex-between" *ngIf="data?.show_brand_footer" role="contentinfo">
+    <aside class="left" aria-label="Brand Section">
+        <a href="data?.brand_website" target="_blank" class="brand" aria-label="Brand Section">
+            <img [src]="data?.brand_logo" alt="Brand logo" class="brand-logo">
+        </a>
+        <ng-container [ngTemplateOutlet]="commonSocial" [ngTemplateOutletContext]="{
+                color: '#334739', 
+                linkedIn: data?.linkedin_url, 
+                facebook: data?.facebook_url,
+                instagram: data?.instagram_url, 
+                twitter: data?.twitter_url}">
+        </ng-container>
+    </aside>
+
+    <a href="https://fairfood.org/" class="font-normal fairfood-site" aria-label="Fairfood Website link">
+        www.fairfood.org
+    </a>
+    <aside class="left" aria-label="Traced by Fairfood Section">
+        <article class="ff-flex-column brand">
+            <span class="traced-by-text" aria-label="Traced by Text">
+                Traced by
+            </span>
+            <a href="https://fairfood.org/" target="_blank" aria-label="Fairfood Link">
+                <img src="../../../assets/images/logo_fairfood.svg" alt="Fairfood Logo">
+            </a>
+        </article>
+        <ng-container [ngTemplateOutlet]="commonSocial" [ngTemplateOutletContext]="fairfoodContext">
+        </ng-container>
+    </aside>
+</footer>
+
+<footer class="ff-flex-between" *ngIf="!data?.show_brand_footer">
+    <article class="ff-flex-column">
+        <span class="traced-by-text">
+            Traced by
+        </span>
+        <a href="https://fairfood.org/" target="_blank">
+            <img src="../../../assets/images/logo_fairfood.svg" alt="logo">
+        </a>
+    </article>
+    <a href="https://fairfood.org/" class="font-normal fairfood-site">
+        www.fairfood.org
+    </a>
+    <ng-container [ngTemplateOutlet]="commonSocial" [ngTemplateOutletContext]="fairfoodContext">
+    </ng-container>
+</footer>
+
+
+
+<section class="ff-flex-center mobile-site" aria-labelledby="Mobile version">
+    <a href="https://fairfood.org/" class="font-normal" target="_blank" aria-label="Fairfood Website">
+        www.fairfood.org
+    </a>
+</section>
+
+<ng-template #commonSocial let-color="color" let-linkedIn="linkedIn" let-twitter="twitter" let-facebook="facebook"
+    let-instagram="instagram">
+    <article class="ff-flex-column social" *ngIf="data">
+        <span class="traced-by-text">
+            {{'social.findUs'|translate}}
+        </span>
+        <ul class="ff-flex-start">
+            <li *ngIf="linkedIn">
+                <a [href]="linkedIn" aria-label="LinkedIn link" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M14.8156 0H1.18095C0.529353 0 0 0.514589 0 1.14927V14.7935C0 15.4286 0.529353 15.944 1.18095 15.944H14.8155C15.4682 15.944 16 15.4286 16 14.7935V1.14915C16 0.514589 15.4682 0 14.8156 0Z"
+                            [attr.fill]="color" />
+                        <path
+                            d="M3.55963 2.19531C4.31853 2.19531 4.93494 2.80969 4.93494 3.56606C4.93494 4.32293 4.31853 4.93755 3.55963 4.93755C2.79925 4.93755 2.18359 4.32293 2.18359 3.56606C2.18359 2.80969 2.79925 2.19531 3.55963 2.19531ZM2.37264 5.97768H4.74577V13.5866H2.37264V5.97768Z"
+                            fill="white" />
+                        <path
+                            d="M6.23438 5.97745H8.51084V7.01696H8.54245C8.85917 6.41895 9.63327 5.78809 10.7878 5.78809C13.1908 5.78809 13.6345 7.36395 13.6345 9.41268V13.5863H11.2631V9.88616C11.2631 9.0033 11.2468 7.86844 10.0299 7.86844C8.79484 7.86844 8.60579 8.82968 8.60579 9.82218V13.5862H6.23438V5.97745Z"
+                            fill="white" />
+                    </svg>
+
+                </a>
+            </li>
+            <li *ngIf="instagram">
+                <a [href]="instagram" aria-label="Instagram link" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="16" height="16" rx="2" [attr.fill]="color" />
+                        <rect x="4.26562" y="4.2666" width="7.46667" height="7.46667" rx="3.73333" fill="white" />
+                        <rect x="11.7344" y="2.66699" width="1.6" height="1.6" rx="0.8" fill="white" />
+                    </svg>
+                </a>
+            </li>
+            <li *ngIf="facebook">
+                <a [href]="facebook" aria-label="Facebook link" target="_blank">
+
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.1698 16C15.6591 16 16.0559 15.6046 16.0559 15.1169V0.883059C16.0559 0.395311 15.6591 0 15.1698 0H0.88615C0.396632 0 0 0.395311 0 0.883059V15.1169C0 15.6046 0.396632 16 0.88615 16H15.1698Z"
+                            [attr.fill]="color" />
+                        <path
+                            d="M11.1172 15.9997V9.80401H13.2288L13.5449 7.38946H11.1172V5.8478C11.1172 5.14871 11.3144 4.6723 12.3322 4.6723L13.6304 4.67174V2.51217C13.4058 2.48274 12.6352 2.41699 11.7388 2.41699C9.86703 2.41699 8.58566 3.54224 8.58566 5.60875V7.38946H6.46875V9.80401H8.58566V15.9997H11.1172Z"
+                            fill="white" />
+                    </svg>
+
+                </a>
+            </li>
+            <li *ngIf="twitter">
+                <a [href]="twitter" aria-label="Twitter link" target="_blank">
+
+                    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.2992 1.89404C19.5543 2.21528 18.7538 2.43239 17.9137 2.53006C18.7713 2.03017 19.4298 1.23857 19.7399 0.295396C18.9246 0.765896 18.0326 1.09739 17.1025 1.27556C16.3448 0.490584 15.2655 0 14.0708 0C11.777 0 9.91726 1.80852 9.91726 4.03911C9.91726 4.35573 9.95403 4.66397 10.0248 4.95967C6.57296 4.79117 3.51255 3.18314 1.46398 0.739375C1.10653 1.33594 0.901716 2.02986 0.901716 2.77C0.901716 4.17139 1.63503 5.40765 2.74943 6.13203C2.08986 6.11194 1.4448 5.93869 0.868107 5.62676C0.86787 5.64368 0.86787 5.66059 0.86787 5.67759C0.86787 7.63462 2.29954 9.26718 4.19952 9.63825C3.5879 9.80002 2.94636 9.82369 2.3239 9.70747C2.85239 11.3122 4.38631 12.4799 6.20373 12.5126C4.78226 13.5959 2.99133 14.2417 1.04548 14.2417C0.710184 14.2417 0.379628 14.2225 0.0546875 14.1852C1.89275 15.3313 4.07592 16 6.42144 16C14.0611 16 18.2387 9.84513 18.2387 4.50754C18.2387 4.33235 18.2348 4.15816 18.2267 3.98497C19.0398 3.41331 19.7417 2.70526 20.2992 1.89404Z"
+                            [attr.fill]="color" />
+                    </svg>
+
+                </a>
+            </li>
+        </ul>
+    </article>
+</ng-template>

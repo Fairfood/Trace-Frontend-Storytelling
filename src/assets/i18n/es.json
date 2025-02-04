@@ -1,0 +1,46 @@
+{
+  "loaderText": "Cargando cadena de suministro...",
+  "shareButton": "Compartir historia",
+  "viewEvidenceText": "Ver evidencia",
+  "blockChainText": "Ver transacción de blockchain",
+  "transactionCountText": "Actas",
+  "transactionsText": "Transactions",
+  "brokenLinkText": "No podemos encontrar la página que está buscando, verifique la URL o comuníquese con nuestro equipo de soporte.",
+  "404Text": "Error (404)",
+  "viewBlock": "Ver cadena de bloques",
+  "blockchain": {
+    "heading": "información de la cadena de bloques",
+    "hash": "Hash de transacción",
+    "inProgress": "Inicio de sesión de blockchain en progreso...",
+    "additionalHeading": "Información Adicional",
+    "copy": "Copiado",
+    "name": "{{actor}} nombre",
+    "address": "{{actor}} Dirección",
+    "sellerText": "Vendedor",
+    "buyerText": "Comprador"
+  },
+  "claim": {
+    "heading": "Evidencia",
+    "uploadedBy": "{{uploadedBy}} subí estas evidencias",
+    "attachment": "Archivos adjuntos",
+    "viewFileText": "Ver archivo",
+    "viewEvidenceText": "Ver evidencias",
+    "docHeader": "visor de archivos",
+    "download": "Para descargar evidencia",
+    "clickHere": "haga clic aquí",
+    "evidenceProvided": "Evidencia proporcionada por",
+    "interventionTextSingle": "Intervención",
+    "interventionTextPlural": "Intervenciones"
+  },
+  "social": {
+    "caption": "Comparta el viaje de nuestro producto con sus amigos y familiares.",
+    "copyLinkText": "O copie el enlace para compartir",
+    "findUs": "Encuéntranos en las redes sociales",
+    "copy": "Copiar",
+    "copied": "Copiado!"
+  },
+  "productText": "productos",
+  "productTextSingle": "producto",
+  "moreDetails": "Más detalles",
+  "lessDetails": "Menos detalles"
+}

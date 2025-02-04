@@ -1,0 +1,98 @@
+@import 'src/assets/styles/responsive';
+
+.fairfood-site {
+  text-decoration: none;
+  cursor: pointer;
+  display: none;
+  color: var(--color-trace-color);
+  @include devices(tablet) {
+    display: block;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mobile-site {
+  padding-bottom: 25px;
+  @include devices(tablet) {
+    display: none;
+  }
+}
+.flex-container-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+footer {
+  padding: 25px 15px;
+  flex-wrap: wrap;
+  .traced-by-text {
+    color: var(--color-trace-color);
+  }
+  @include devices(tablet-md) {
+    padding: 20px 40px;
+  }
+
+  @include devices(laptop) {
+    padding: 30px 80px;
+  }
+  @include devices(laptop-xlg) {
+    padding: 30px 120px;
+  }
+  @include devices(desktop) {
+    padding: 30px 250px;
+  }
+}
+
+ul {
+  margin-top: 10px;
+  padding: 0;
+  li {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.social {
+  @include devices(mobile-xs) {
+    min-width: 150px;
+  }
+  .traced-by-text {
+    text-align: left;
+    color: var(--color-trace-color);
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  padding: 15px 0;
+  @include devices(tablet) {
+    width: auto;
+    justify-content: flex-start;
+    padding: 0;
+  }
+  .brand {
+    padding-right: 15px;
+    border-right: 1px solid var(--color-border-right);
+  }
+
+  .social {
+    padding-left: 15px;
+  }
+
+  .brand-logo {
+    height: 50px;
+    max-width: 160px;
+    object-fit: contain;
+  }
+}
