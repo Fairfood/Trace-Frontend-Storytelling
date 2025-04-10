@@ -22,4 +22,12 @@ export class ClaimListComponent {
   claimDetails(data: any): void {
     this.claimClicked.emit(data);
   }
+
+  /**
+   * Handle image loading errors by setting a default image
+   * @param event
+   */
+  onImgError(event: any): void {
+    event.target.src = '../../assets/images/default_claim_error.png';
+  }
 }

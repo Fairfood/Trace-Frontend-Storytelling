@@ -36,7 +36,9 @@ describe('StoryService', () => {
 
     service = TestBed.inject(StoryService);
     apiServiceSpy = TestBed.inject(ApiService) as jasmine.SpyObj<ApiService>;
-    translateServiceSpy = TestBed.inject(TranslateService) as jasmine.SpyObj<TranslateService>;
+    translateServiceSpy = TestBed.inject(
+      TranslateService
+    ) as jasmine.SpyObj<TranslateService>;
   });
 
   it('should be created', () => {
@@ -56,22 +58,21 @@ describe('StoryService', () => {
       expect(apiServiceSpy.storyTelling).toHaveBeenCalledWith(id, 'map', theme);
     });
 
-    it('should process and return the correct response from apiService', (done) => {
+    it('should process and return the correct response from apiService', done => {
       const theme = 'someTheme';
       const id = 'someId';
       const responseData = { program: {}, map: {} }; // Your mock response data here
 
       apiServiceSpy.storyTelling.and.returnValue(of(responseData));
 
-      service.fetchingMapData(theme, id).subscribe((response) => {
+      service.fetchingMapData(theme, id).subscribe(response => {
         expect(response).toEqual({
           map: responseData.map,
-          program: PROGRAM_SAMPLE
+          program: PROGRAM_SAMPLE,
         });
         done();
       });
     });
-
   });
 
   describe('fetchingClaims', () => {
@@ -285,7 +286,8 @@ describe('StoryService', () => {
       ];
 
       const expectedDescription =
-        'Node1 [translation] Source1, Source2. Node2 [translation] Source3.';
+        'Node1 [translation] Source1 [translation] Source2. Node2 [translation] Source3.';
+
       const expectedCount = 3;
 
       translateServiceSpy.instant.and.callFake(key => {

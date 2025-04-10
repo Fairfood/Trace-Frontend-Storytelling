@@ -48,10 +48,6 @@
           display: block;
         }
       }
-
-      .items {
-        display: flex;
-      }
       p {
         margin-top: 10px;
         max-width: 100%;
@@ -224,21 +220,6 @@
     }
   }
 }
-.flexible-content {
-  display: flex;
-  flex-direction: column;
-  @include devices(laptop-xlg) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .first {
-    margin-right: 0;
-    @include devices(laptop-xlg) {
-      margin-right: 20px;
-    }
-  }
-}
 
 .tr-qty {
   margin-top: 10px;
@@ -272,21 +253,13 @@
   margin-top: 20px;
 }
 
-.company-claim {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.card-text {
   flex-wrap: wrap;
-  li {
-    padding: 3px 10px;
-    margin: 5px;
-    margin-right: 10px;
-    background-color: var(--color-light-primary);
-    span {
-      margin-right: 15px;
-      background: none !important;
-      display: flex;
-      align-items: center;
-    }
+  margin-top: 5px;
+  @include devices(tablet-md) {
+    margin-top: 0;
+    margin-left: 5px;
   }
 }
+
+

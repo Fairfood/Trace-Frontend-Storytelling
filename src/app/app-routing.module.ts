@@ -5,6 +5,10 @@ import { PageNotFoundComponent } from './shared/components/page-not-found';
 
 const routes: Routes = [
   {
+    path: '01/:gtin/10/:batch',
+    loadChildren: () => import('./feature/story/story.module').then(m => m.StoryModule),
+  },
+  {
     path: ':entity',
     loadChildren: () => import('./feature/story/story.module').then(m => m.StoryModule),
   },

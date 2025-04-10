@@ -1,6 +1,6 @@
 <header class="ff-flex-between">
-    <a class="navbar-brand" [href]="data?.brand_website" target="_blank" aria-label="Brand website">
-        <img [src]="data?.brand_logo || '../../../assets/images/logo_fairfood.svg'" alt="It is the logo of the brand showing in the website">
+    <a class="navbar-brand" [href]="headerData?.website" target="_blank" aria-label="Brand website">
+        <img [src]="headerData?.logo || '../../../assets/images/logo_fairfood.svg'" alt="It is the logo of the brand showing in the website">
     </a>
     <!-- Language selection dropdown -->
     <aside aria-label="right section" class="ff-flex-center" *ngIf="languageDropdownItems?.length">
@@ -15,7 +15,7 @@
             </div>
             <mat-menu #languageMenu="matMenu">
                 <ng-container *ngFor="let lang of languageDropdownItems">
-                    <button mat-menu-item (click)="changeLanguage(lang?.code, data?.name)" class="ff-flex-start"
+                    <button mat-menu-item (click)="changeLanguage(lang?.code, headerData?.name)" class="ff-flex-start"
                         role="menuitem">
                         <img [src]="lang.imageUrl" alt="{{lang?.code}}" class="mr-10">
                         {{lang.name}}

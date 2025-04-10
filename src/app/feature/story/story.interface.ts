@@ -20,3 +20,8 @@ export interface NodeInfo {
   node_name: string;
   external_sources: string[];
 }
+
+export interface ICommonObject {
+  id: string;
+  name: string;
+}

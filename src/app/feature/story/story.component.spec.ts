@@ -65,10 +65,11 @@ describe('StoryComponent', () => {
 
   describe('initializeData', () => {
     it('should set invalidLink to false and call fetchThemeLanguages when entity is provided', () => {
+      spyOn(component, 'fetchThemeLanguages');
       component.initializeData('ThemeCaching', 'eQQna');
 
       expect(component.invalidLink).toBeFalse();
-      // You can mock fetchThemeLanguages and test if it was called
+      expect(component.fetchThemeLanguages).toHaveBeenCalled();
     });
 
     it('should set invalidLink to true when entity is not provided', () => {
@@ -95,12 +96,19 @@ describe('StoryComponent', () => {
   describe('getActorData', () => {
     it('should fetch actor data correctly', () => {
       spyOn(component.storyService, 'fetchingMapData').and.returnValue(
-        of({ program: {}, map: [] })
+        of({
+          program: {
+            program_stats_details: [],
+          },
+          map: [],
+        })
       );
 
       component.getActorData('theme', 'id');
 
-      expect(component.programSection).toEqual({});
+      expect(component.programSection).toEqual({
+        program_stats_details: [],
+      });
       expect(component.mapActors).toEqual([]);
       expect(component.dataLoading).toBeFalse();
     });
@@ -128,8 +136,11 @@ describe('StoryComponent', () => {
   describe('getLink', () => {
     it('should call getActionLink from storyService', () => {
       spyOn(component.storyService, 'getActionLink');
+      component.themeData = {
+        action_button_url: 'someUrl',
+      };
 
-      component.getLink('someUrl');
+      component.getLink();
 
       expect(component.storyService.getActionLink).toHaveBeenCalledWith(
         'someUrl'
@@ -143,7 +154,7 @@ describe('StoryComponent', () => {
       const data = { id: '123', name: 'Company XYZ' };
       component.companyClaims = [{ claim_id: '123' }];
 
-      component.companyClaim(data);
+      component.openCompanyClaim(data);
 
       expect(component.claimDetails).toHaveBeenCalledWith({ claim_id: '123' });
     });

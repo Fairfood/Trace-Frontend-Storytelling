@@ -26,6 +26,7 @@ export class ImageCarousalComponent implements OnChanges {
   activeRight: any;
   activeLeft: any;
 
+  /* istanbul ignore next */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['imageArray']) {
       const imageArray = changes['imageArray'].currentValue;

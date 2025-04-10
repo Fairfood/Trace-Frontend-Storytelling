@@ -48,6 +48,8 @@ export class TransactionDetailComponent
 
   @Input() theme: string;
 
+  @Input() selectedStageIndex: number;
+
   @Output() claimClicked = new EventEmitter<any>();
 
   selectedFarmer: any;
@@ -60,9 +62,9 @@ export class TransactionDetailComponent
 
   /**
    * Initialize component
-   * 
+   *
    */
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   ngOnInit(): void {
     if (this.isMobile) {
       // Initialize product slider for mobile
@@ -144,7 +146,7 @@ export class TransactionDetailComponent
     });
   }
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   openDialog(data: any): void {
     this.dialog.open(BlockchainDetailsComponent, {
       width: this.isMobile ? '100vh' : '50vw',
@@ -155,7 +157,7 @@ export class TransactionDetailComponent
     });
   }
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   openClaimDialog(data: any): void {
     this.claimClicked.emit(data);
   }
@@ -171,7 +173,7 @@ export class TransactionDetailComponent
   /**
    * Clean up resources and unsubscribe from the API subscription
    */
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   ngOnDestroy(): void {
     this.apiSub?.unsubscribe();
   }
