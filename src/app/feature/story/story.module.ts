@@ -5,9 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 
-// other modules
-import { LayoutModule } from '../layout';
-
 // material
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,6 +27,9 @@ import { VideoContentComponent } from '../video-content/';
 import { ShareButtonComponent } from '../../shared/components/share-button';
 import { ImageCarousalComponent } from '../../shared/components/image-carousal/';
 import { ProgramSymbolPipe } from 'src/app/shared/pipes';
+import { FooterComponent } from '../footer';
+import { HeaderComponent } from '../header';
+import { InvalidLinkComponent } from 'src/app/shared/components/invalid-link';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, '../../assets/i18n/', '.json');
@@ -50,7 +50,6 @@ const routes: Routes = [{ path: '', component: StoryComponent }];
         deps: [HttpClient],
       },
     }),
-    LayoutModule,
     MatTooltipModule,
     MatMenuModule,
     TimelineComponent,
@@ -62,7 +61,10 @@ const routes: Routes = [{ path: '', component: StoryComponent }];
     TransactionDetailComponent,
     ClaimDetailsComponent,
     ClaimListComponent,
-    ProgramSymbolPipe
+    ProgramSymbolPipe,
+    FooterComponent,
+    HeaderComponent,
+    InvalidLinkComponent
   ],
 })
 export class StoryModule {}

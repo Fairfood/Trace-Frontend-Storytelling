@@ -45,7 +45,7 @@
 <!-- Template for displaying claim icon (verified_user or an image) -->
 <ng-template #claimIconTemplate let-imageUrl="imageUrl">
     <span class="material-icons claim-icon ff-flex-center" *ngIf="!imageUrl">verified_user</span>
-    <img [src]="imageUrl" class="claim-icon" alt="c-ic" *ngIf="imageUrl">
+    <img [src]="imageUrl" class="claim-icon" alt="c-ic" *ngIf="imageUrl" (error)="onImgError($event)">
 </ng-template>
 
 <ng-template #claimDetailsTemplate let-name="name">

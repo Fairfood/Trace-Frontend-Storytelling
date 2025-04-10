@@ -62,6 +62,7 @@ $box-large-desktop: 160px;
   @include set-h-mh($box-small-xs);
   margin-left: 5px;
   width: 80%;
+
   @include devices(mobile-xs) {
     width: 90%;
   }
@@ -71,10 +72,12 @@ $box-large-desktop: 160px;
     width: 310px;
     margin-left: 15px;
   }
+
   @include devices(laptop-xlg) {
     @include set-h-mh($box-small-xlg);
     width: 370px;
   }
+
   @include devices(desktop) {
     @include set-h-mh($box-small-desktop);
     width: 570px;
@@ -89,10 +92,12 @@ $box-large-desktop: 160px;
     @include set-h-mh($box-large-md);
     width: 342px;
   }
+
   @include devices(laptop-xlg) {
     @include set-h-mh($box-large-xlg);
     width: 400px;
   }
+
   @include devices(desktop) {
     @include set-h-mh($box-large-desktop);
     width: 600px;
@@ -110,6 +115,7 @@ $box-large-desktop: 160px;
     margin-right: 0;
     display: flex;
     align-items: center;
+
     @include devices(tablet-md) {
       margin-right: 20px;
       margin-left: 0;
@@ -123,18 +129,22 @@ $box-large-desktop: 160px;
     &.large-box {
       @include large-box();
     }
+
     &.small-box {
       @include small-box();
     }
 
     &.active {
       background-color: var(--color-primary-shade1);
+
       .stage-icon {
         background-color: var(--color-white);
       }
+
       .nav-icon-stage {
         display: none;
       }
+
       .arrow-right-stage {
         display: block;
         width: 0;
@@ -144,10 +154,12 @@ $box-large-desktop: 160px;
         position: absolute;
         right: -10px;
         border-left: 10px solid var(--color-primary-shade1);
+
         @include devices(laptop-xlg) {
           border-width: 16px;
           right: -17px;
         }
+
         @include devices(desktop) {
           border-width: 20px;
           right: -21px;
@@ -157,6 +169,7 @@ $box-large-desktop: 160px;
       .double-circle {
         box-shadow: 0 0 0 8px var(--color-primary), 0 0 0 8px var(--color-white);
         border: 1px solid var(--color-primary);
+
         @include devices(laptop-xlg) {
           box-shadow: 0 0 0 11px var(--color-primary),
             0 0 0 11px var(--color-white);
@@ -168,6 +181,7 @@ $box-large-desktop: 160px;
 
 .timeline-stage {
   position: relative;
+
   @include devices(tablet-md) {
     max-width: 420px;
     max-height: 714px;
@@ -178,6 +192,7 @@ $box-large-desktop: 160px;
   @include devices(laptop-xlg) {
     max-width: 500px;
   }
+
   @include devices(desktop) {
     max-width: 700px;
   }
@@ -187,25 +202,32 @@ $box-large-desktop: 160px;
 
 .other-resource {
   background-color: var(--color-other-resources) !important;
+
   .viewmore {
     color: var(--color-primary);
     font-size: 10px;
     display: flex;
     align-self: end;
+
     @include devices(tablet-md) {
       font-size: 14px;
     }
   }
+
   .info-icon {
     margin-left: 10px;
   }
+
   .stage-icon {
     @include initalise-h-w-mw(30px);
+
     @include devices(tablet-md) {
       @include initalise-h-w-mw(40px);
     }
+
     img {
       @include initalise-h-w-mw(18px);
+
       @include devices(tablet-md) {
         @include initalise-h-w-mw(30px);
       }
@@ -218,12 +240,15 @@ $box-large-desktop: 160px;
 ::before {
   box-sizing: border-box;
 }
+
 .t-wrapper {
   position: relative;
   justify-content: flex-end;
+
   @include devices(mobile-xs) {
     justify-content: space-between;
   }
+
   &::before {
     content: '';
     background: var(--color-stroke);
@@ -234,13 +259,16 @@ $box-large-desktop: 160px;
     width: 3px;
     height: 100%;
     z-index: 400;
+
     @include devices(tablet-md) {
       width: 4px;
     }
+
     @include devices(laptop-xlg) {
       left: 17px;
     }
   }
+
   &:last-child {
     &::before {
       background-color: transparent;
@@ -272,19 +300,24 @@ $box-large-desktop: 160px;
     &.width-desc {
       white-space: nowrap;
       max-width: 70px;
+
       @include devices(mobile-fold) {
         max-width: 100px;
       }
+
       @include devices(mobile) {
         max-width: 250px;
       }
+
       @include devices(tablet) {
         max-width: 300px;
         font-size: 12px;
       }
+
       @include devices(tablet-md) {
         max-width: 70%;
       }
+
       @include devices(desktop) {
         max-width: 77%;
         font-size: 13px;
@@ -294,14 +327,17 @@ $box-large-desktop: 160px;
 
   .other {
     width: 26px;
+
     @include devices(mobile-xs) {
       margin-left: 17px;
       width: 60px;
     }
+
     @include devices(tablet-md) {
       width: auto;
     }
   }
+
   .double-circle {
     background: var(--color-white);
     border-radius: 50%;
@@ -321,27 +357,37 @@ $box-large-desktop: 160px;
     }
   }
 }
+
 .heading {
   margin-bottom: 15px;
+
   .font-normal {
     color: var(--color-text-primary);
     font-size: 18px;
     font-family: 'Moderat Bold', sans-serif;
   }
+
   img {
     margin-right: 10px;
   }
+
   .traced-by-text {
     font-family: 'Moderat Regular', sans-serif;
     color: var(--color-text-primary);
     font-size: 14px;
   }
 }
+
 .desc-wrapper {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
   @include devices(tablet-md) {
     display: inline-flex;
   }
+}
+
+::ng-deep .mdc-tooltip__surface{
+  color: var(--color-white) !important;
 }

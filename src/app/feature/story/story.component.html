@@ -4,7 +4,7 @@
 
         <section class="first-section" *ngIf="themeData">
 
-            <app-header [data]="themeData"></app-header>
+            <app-header></app-header>
 
             <section class="bg-image"
                 [ngStyle]="{'background-image':'url(' + themeData?.banner_image + ')', 'width': themeData.banner_mode === 2 && '100%'}">
@@ -28,7 +28,7 @@
 
                 <!-- action buttons  -->
                 <aside class="action-btn ff-flex-start" aria-label="">
-                    <button class="button-primary ff-flex-center" (click)="getLink(themeData?.action_button_url)"
+                    <button class="button-primary ff-flex-center" (click)="getLink()"
                         *ngIf="themeData?.show_action_button">
                         {{themeData?.action_button_text}}
                         <span class="material-icons">east</span>
@@ -95,8 +95,8 @@
 
             <div class="details" *ngIf="!isMobile">
                 <app-transaction-detail [transactionData]="selectedStage" [imagesUrl]="imagesUrl"
-                    [batchId]="themeData.batch" [theme]="themeData.name" *ngIf="!stageLoading"
-                    (claimClicked)="companyClaim($event)">
+                    [batchId]="themeData.batch" [theme]="themeData.name" [selectedStageIndex]="selectedStageIndex"
+                    *ngIf="!stageLoading" (claimClicked)="openCompanyClaim($event)">
                 </app-transaction-detail>
                 <div class="content-loader-wrapper ff-flex-wrap" *ngIf="stageLoading">
                     <app-placeholder-loader [rows]="4" [showImagePlaceholder]="true" [showQuarterWidth]="true"
@@ -106,26 +106,20 @@
         </section>
 
         <!-- bottom video section  -->
-        <app-video-content [data]="themeData" [sharingData]="sharingData" *ngIf="themeData"></app-video-content>
+        <app-video-content *ngIf="themeData"></app-video-content>
     </ng-container>
 
     <!-- only for invalid link  -->
 
     <ng-container *ngIf="invalidLink">
         <section class="header-padding">
-            <app-header [data]="themeData" class="w-100"></app-header>
+            <app-header class="w-100"></app-header>
         </section>
-        <section class="invalid-link ff-flex-center ff-flex-column">
-            <img class="img-not-found" src="../../assets/images/img_not_found.svg" alt=""> <br>
-            <h3 class="font-subheading"> {{ '404Text' | translate }}</h3>
-            <p class="font-section-heading">
-                {{'brokenLinkText'| translate}}
-            </p>
-        </section>
+        <app-invalid-link></app-invalid-link>
     </ng-container>
 
 
-    <app-footer [data]="themeData"></app-footer>
+    <app-footer></app-footer>
 </ng-container>
 
 <section class="loader-container ff-flex-center" *ngIf="dataLoading">

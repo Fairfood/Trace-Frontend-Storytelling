@@ -1,14 +1,14 @@
-<footer class="ff-flex-between" *ngIf="data?.show_brand_footer" role="contentinfo">
+<footer class="ff-flex-between" *ngIf="footerData?.show_brand_footer" role="contentinfo">
     <aside class="left" aria-label="Brand Section">
-        <a href="data?.brand_website" target="_blank" class="brand" aria-label="Brand Section">
-            <img [src]="data?.brand_logo" alt="Brand logo" class="brand-logo">
+        <a href="footerData?.brand_website" target="_blank" class="brand" aria-label="Brand Section">
+            <img [src]="footerData?.brand_logo" alt="Brand logo" class="brand-logo">
         </a>
         <ng-container [ngTemplateOutlet]="commonSocial" [ngTemplateOutletContext]="{
                 color: '#334739', 
-                linkedIn: data?.linkedin_url, 
-                facebook: data?.facebook_url,
-                instagram: data?.instagram_url, 
-                twitter: data?.twitter_url}">
+                linkedIn: footerData?.linkedin_url, 
+                facebook: footerData?.facebook_url,
+                instagram: footerData?.instagram_url, 
+                twitter: footerData?.twitter_url}">
         </ng-container>
     </aside>
 
@@ -29,7 +29,7 @@
     </aside>
 </footer>
 
-<footer class="ff-flex-between" *ngIf="!data?.show_brand_footer">
+<footer class="ff-flex-between" *ngIf="!footerData?.show_brand_footer">
     <article class="ff-flex-column">
         <span class="traced-by-text">
             Traced by
@@ -55,7 +55,7 @@
 
 <ng-template #commonSocial let-color="color" let-linkedIn="linkedIn" let-twitter="twitter" let-facebook="facebook"
     let-instagram="instagram">
-    <article class="ff-flex-column social" *ngIf="data">
+    <article class="ff-flex-column social" *ngIf="footerData">
         <span class="traced-by-text">
             {{'social.findUs'|translate}}
         </span>

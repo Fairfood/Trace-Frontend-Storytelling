@@ -68,7 +68,6 @@ export class ClaimDetailsComponent implements OnInit, AfterViewInit {
    * Updates each 'element' object with filtered arrays.
    * Initializes 'interventions' with a default value if it's not defined.
    */
-  /* istanbul ignore next */
   filterFields(): void {
     // Loop through each 'element' in 'data.evidences'
     this.data?.evidences?.forEach((element: any) => {
@@ -97,7 +96,6 @@ export class ClaimDetailsComponent implements OnInit, AfterViewInit {
    * Determines the type of file and sets appropriate properties for viewing.
    * @param fileObject The object representing the file to be viewed.
    */
-  /* istanbul ignore next */
   viewFile(fileObject: any): void {
     const newFileObject = this.service.configureFileObject(fileObject);
 

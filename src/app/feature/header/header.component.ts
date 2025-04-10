@@ -1,4 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 /**
@@ -6,13 +8,17 @@ import { Subscription } from 'rxjs';
  */
 import { LanguageService, StorageService } from 'src/app/shared/services';
 import { LanguageSelection } from 'src/app/shared/services/language.service';
+import { StoryStoreService } from 'src/app/shared/store';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatMenuModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Input() data: any; // Input theme data for the header
+  headerData: any; // Input theme data for the header
 
   languageDropdownItems: any[] = []; // Array to hold language dropdown items
   selectedLanguage: any; // Currently selected language
@@ -20,7 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private translateService: TranslateService,
     private storage: StorageService,
-    private language: LanguageService
+    private language: LanguageService,
+    private store: StoryStoreService
   ) {}
 
   /* istanbul ignore next */
@@ -35,6 +42,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.translateService.use(browserLanguage);
       });
     this.subArray.push(sub);
+
+    /**
+     * Fetching global store data in header.
+     * Changelog: it was passed down from parent component.
+     * Changed to store
+     */
+    const storeSub = this.store.storyConfiguration$.subscribe({
+      next: (res: any) => {
+        if (res) {
+          const { brand_website, brand_logo, name } = res;
+          this.headerData = {
+            website: brand_website,
+            logo: brand_logo,
+            name,
+          };
+        }
+      },
+    });
+    this.subArray.push(storeSub);
   }
 
   /* istanbul ignore next */

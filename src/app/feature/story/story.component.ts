@@ -25,6 +25,8 @@ import { GoogleMapComponent } from './google-map.component';
  */
 import { mapStyle } from './map-style';
 import { CHAR_LIMIT, TrimFieldName } from '../../shared/config/common';
+import { ICommonObject } from './story.interface';
+import { StoryStoreService } from 'src/app/shared/store';
 
 @Component({
   selector: 'app-story',
@@ -33,8 +35,7 @@ import { CHAR_LIMIT, TrimFieldName } from '../../shared/config/common';
 })
 export class StoryComponent
   extends GoogleMapComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   dataLoading = true;
   pageApis: Subscription[] = [];
 
@@ -60,7 +61,8 @@ export class StoryComponent
     private socialShareService: SocialShareService,
     private themeService: ThemeService,
     private storage: StorageService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private store: StoryStoreService
   ) {
     super();
   }
@@ -68,8 +70,11 @@ export class StoryComponent
   ngOnInit(): void {
     const entity = this.routes.snapshot.params['entity'];
     const batch = this.routes.snapshot.queryParams['batch'];
-    this.isFto = entity.includes('fto');
-    this.initializeData(entity, batch);
+    const batchFromParam = this.routes.snapshot.params['batch'];
+    const theme = this.routes.snapshot.queryParams['theme'];
+    this.isFto = (batchFromParam ? theme : entity).includes('fto');
+    this.initializeData(batchFromParam ? theme : entity, batchFromParam || batch);
+    // this.initializeData(entity, batch);
   }
 
   initializeData(entity: string, batch: string): void {
@@ -77,11 +82,17 @@ export class StoryComponent
       this.invalidLink = false;
       this.fetchThemeLanguages(entity, batch);
     } else {
-      this.invalidLink = true;
+      this.stopLoadingAndShowError();
     }
   }
 
-  private fetchThemeLanguages(entity: string, batch: string): void {
+  stopLoadingAndShowError(): void {
+    this.invalidLink = true;
+    this.dataLoading = false;
+  }
+
+  /* istanbul ignore next */
+  fetchThemeLanguages(entity: string, batch: string): void {
     const api = this.storyService
       .getAvailableLanguagesForTheme(entity)
       .subscribe({
@@ -90,29 +101,10 @@ export class StoryComponent
           this.loadGoogleMaps(this.storage.fetchLanguageId());
         },
         error: () => {
-          this.getTheme(entity, batch);
-          this.loadGoogleMaps(this.storage.fetchLanguageId());
+          this.stopLoadingAndShowError();
         },
       });
     this.pageApis.push(api);
-  }
-
-  /**
-   * This method sets default placeholder images for image fields in the theme data if they are not already defined.
-   */
-  /* istanbul ignore next */
-  private setDefaultPlaceholderImages(): void {
-    // Retrieve default images and image fields from the story service
-    const { defaultImages, imageFields } =
-      this.storyService.placeholderImages();
-
-    // Iterate through the image fields
-    for (const field of imageFields) {
-      // Set default image for the field if not already defined in theme data
-      if (!this.themeData[field]) {
-        this.themeData[field] = defaultImages[field];
-      }
-    }
   }
 
   /* istanbul ignore next */
@@ -155,6 +147,27 @@ export class StoryComponent
     this.setDefaultPlaceholderImages();
   }
 
+  /**
+   * This method sets default placeholder images for image fields in the theme data if they are not already defined.
+   * And calls the next method shareDataSpec
+   */
+  /* istanbul ignore next */
+  private setDefaultPlaceholderImages(): void {
+    // Retrieve default images and image fields from the story service
+    const { defaultImages, imageFields } =
+      this.storyService.placeholderImages();
+
+    // Iterate through the image fields
+    for (const field of imageFields) {
+      // Set default image for the field if not already defined in theme data
+      if (!this.themeData[field]) {
+        this.themeData[field] = defaultImages[field];
+      }
+    }
+
+    this.shareDataSpec();
+  }
+
   /* istanbul ignore next */
   private setMapStyle() {
     const { primary_colour_light, secondary_colour } = this.themeData;
@@ -172,6 +185,26 @@ export class StoryComponent
   }
 
   /**
+   * This method prepares and updates share data for social sharing.
+   */
+  shareDataSpec(): void {
+    this.sharingData = this.storyService.shareDataSpecification(this.themeData);
+    const {
+      share_facebook_title,
+      share_linkedin_title,
+      share_facebook_body,
+      share_linkedin_body,
+    } = this.themeData;
+    this.socialShareService.updateTitle({
+      title: share_facebook_title || share_linkedin_title,
+      description: share_facebook_body || share_linkedin_body,
+      url: this.sharingData['url'],
+    });
+    this.store.updateStateProp<any>('themeConfiguration', this.themeData);
+    this.store.updateStateProp<any>('sharingData', this.sharingData);
+  }
+
+  /**
    * This will fetch all the configuration data for the theme.
    * It needs entity id and batch id to fetch the data.
    * @param entity string
@@ -183,12 +216,10 @@ export class StoryComponent
         this.themeData = result;
         this.setThemeDataFields();
         this.setMapStyle();
-        this.shareDataSpec();
         this.getClaimDetails(entity, batch);
       },
       error: () => {
-        this.invalidLink = true;
-        this.dataLoading = false;
+        this.stopLoadingAndShowError();
       },
     });
     this.pageApis.push(api);
@@ -200,7 +231,7 @@ export class StoryComponent
         const { batchClaims, companyClaims } = result;
 
         this.companyClaims = companyClaims;
-
+        this.store.updateStateProp<any[]>('companyClaims', companyClaims);
         this.batchClaims = batchClaims;
 
         this.primaryClaimIndex = 0;
@@ -219,15 +250,13 @@ export class StoryComponent
     const api = this.storyService.fetchingMapData(theme, id).subscribe({
       next: (result: any) => {
         const { program, map } = result;
-
-        this.programSection = program;
-        this.programSection['program_stats_details'] = this.programSection.program_stats_details?.map((p: any) => {
+        program.program_stats_details = program.program_stats_details?.map((p: any) => {
           return {
             ...p,
             name: TrimFieldName(CHAR_LIMIT.programTitle, p.name),
           };
         });
-
+        this.programSection = program;
         this.mapActors = map || [];
         this.dataLoading = false;
 
@@ -285,6 +314,9 @@ export class StoryComponent
           imageUrl: this.imagesUrl,
           theme: this.themeData.name,
           batch: this.themeData.batch,
+          selectedStageIndex: this.selectedStageIndex,
+          brand_logo: this.themeData.brand_logo,
+          banner_image: this.themeData?.banner_image,
         },
         panelClass: 'mobile-dialog',
         enterAnimationDuration: '600ms',
@@ -316,26 +348,8 @@ export class StoryComponent
     }
   }
 
-  getLink(url: string): void {
-    this.storyService.getActionLink(url);
-  }
-
-  /**
-   * This method prepares and updates share data for social sharing.
-   */
-  shareDataSpec(): void {
-    this.sharingData = this.storyService.shareDataSpecification(this.themeData);
-    const {
-      share_facebook_title,
-      share_linkedin_title,
-      share_facebook_body,
-      share_linkedin_body,
-    } = this.themeData;
-    this.socialShareService.updateTitle({
-      title: share_facebook_title || share_linkedin_title,
-      description: share_facebook_body || share_linkedin_body,
-      url: this.sharingData['url'],
-    });
+  getLink(): void {
+    this.storyService.getActionLink(this.themeData?.action_button_url);
   }
 
   /* istanbul ignore next */
@@ -360,13 +374,13 @@ export class StoryComponent
   }
 
   /* istanbul ignore next */
-  companyClaim(data: { id: string; name: string }): void {
-    const { id } = data;
-    const claimDetails = this.companyClaims.find(a => a.claim_id === id);
+  openCompanyClaim({ id }: ICommonObject): void {
+    const claimDetails = this.companyClaims.find((a: any) => a.claim_id === id);
     if (claimDetails) {
       this.claimDetails(claimDetails);
     }
   }
+
   /* istanbul ignore next */
   ngOnDestroy(): void {
     this.pageApis?.map(m => m?.unsubscribe());

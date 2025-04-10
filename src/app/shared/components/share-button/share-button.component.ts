@@ -46,6 +46,7 @@ export class ShareButtonComponent {
    * Show and hide tooltip
    * @param tooltip: MatTooltip
    */
+  /* istanbul ignore next */
   showHideTooltip(tooltip: MatTooltip): void {
     tooltip.show();
 

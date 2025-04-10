@@ -118,7 +118,6 @@
   font-family: 'Moderat Bold', sans-serif;
   font-weight: 700;
   font-size: 16px;
-  text-transform: capitalize;
   @include devices(tablet-md) {
     font-size: 17px;
   }

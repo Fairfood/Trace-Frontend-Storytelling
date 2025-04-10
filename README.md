@@ -14,6 +14,7 @@ To contribute to the development of StorytellingV2, ensure you have the followin
 
 - NodeJS (version 14.15 or higher)
 - Latest version of Angular
+- We are using Angular version 16
 
 ## Installation
 

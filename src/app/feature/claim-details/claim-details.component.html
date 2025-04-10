@@ -3,7 +3,7 @@
 <div class="dialog-container" role="dialog" aria-labelledby="modalHeader">
     <!-- Header section with logo and close button -->
     <section class="header ff-flex-between" id="modalHeader" role="banner">
-        <h2 class="font-normal ff-flex-start" aria-label="It contains the brand logo">
+        <h2 class="font-normal ff-flex-start">
             <!-- Brand logo -->
             <img [src]="data?.logo" alt="It is the logo of the brand shown" class="logo-popup">
         </h2>
@@ -13,7 +13,7 @@
     <!-- Claim content section -->
     <section class="claim-content" [ngClass]="{'border-b': data?.evidences?.length}" aria-label="Claim details">
         <!-- Banner image -->
-        <img [src]="data?.theme_image || data?.banner" alt="It is the brand banner image" class="banner">
+        <img [src]="data?.theme_image || data?.banner" alt="It is the brand banner" class="banner">
         <article class="claim ff-flex-column">
             <!-- Banner image -->
             <h2 class="claim-name font-bold" id="claim-name">{{data.name}}</h2>

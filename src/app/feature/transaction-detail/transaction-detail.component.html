@@ -20,7 +20,7 @@
                         {{selectedFarmer?.province}}, {{selectedFarmer?.country}}
                     </span>
                 </article>
-                <article class="items">
+                <article class="ff-flex-start">
                     <span class="profile-items">
                         <ng-container [ngTemplateOutlet]="svgQuantity"></ng-container>
                         <span class="font-normal" aria-labelledby="transaction-quantity">
@@ -53,7 +53,7 @@
     </section>
     <section class="transaction-section" aria-label="Transaction Details">
         <aside class="product" aria-label="Product details">
-            <h3 class="font-section-heading" id="product-heading">
+            <h3 class="font-section-heading product-heading" id="product-heading">
                 <ng-container [ngTemplateOutlet]="productHeading"></ng-container>
             </h3>
             <ul role="list">
@@ -64,7 +64,7 @@
                         <span class="img-round">
                             <img [src]="prod.image_url || '../../assets/images/product_placeholder.png'"
                                 (error)="onImgError($event)"
-                                alt="it will show a product image or a default product placeholder image" role="img">
+                                alt="product placeholder">
                         </span>
                         <aside class="w-100" aria-label="Name">
                             <article class="ff-flex-between">
@@ -72,8 +72,7 @@
                                     attr.aria-labelledby="product-name-{{i}}">
                                     {{ (prod?.theme_name || prod?.name) | truncateText: 30 }}
                                 </h3>
-                                <span class="ff-flex-center sub-text"
-                                    attr.aria-labelledby="product-direction-{{i}}">
+                                <span class="ff-flex-center sub-text" attr.aria-labelledby="product-direction-{{i}}">
                                     <span class="traced-by-text">
                                         {{prod.direction}}
                                     </span>
@@ -92,14 +91,14 @@
             </ul>
         </aside>
         <section class="mobile-product" *ngIf="isMobile">
-            <h3 class="font-section-heading">
+            <h3 class="font-section-heading product-heading">
                 <ng-container [ngTemplateOutlet]="productHeading"></ng-container>
             </h3>
             <app-image-carousal [isProduct]="true" [imageArray]="productSlider"
                 aria-label="Mobile view:  Product Image Carousel">
             </app-image-carousal>
         </section>
-        <aside class="transaction" aria-label="">
+        <aside class="transaction" aria-label="Transaction section">
             <h3 class="font-section-heading main" *ngIf="!loading" id="transaction-text">
                 <ng-container [ngTemplateOutlet]="transactionText"></ng-container>
             </h3>
@@ -109,8 +108,8 @@
                         <h3 class="font-section-heading" id="transaction-product-name-{{trans.id}}">
                             {{ trans?.product_name | truncateText: 30 }}
                         </h3>
-                        <span class="ff-flex-center sub-text" (click)="openDialog(trans)" *ngIf="!isMobile"
-                            tabindex="0" role="button" aria-label="View block chain details">
+                        <span class="ff-flex-center sub-text" (click)="openDialog(trans)" *ngIf="!isMobile" tabindex="0"
+                            role="button" aria-label="View block chain details">
                             <span class="traced-by-text view-block">
                                 {{'viewBlock'|translate}}
                             </span>
@@ -136,9 +135,18 @@
                                 {{ trans?.date * 1000 | date: 'dd MMMM y' }}
                             </span>
                         </span>
+
+                        <span class="qty font-normal ff-flex-start card-text" *ngIf="trans?.verification_method === 2">
+                            <ng-container [ngTemplateOutlet]="svgCard"></ng-container>
+                            <span aria-labelledby="cardIcon">
+                                Verified with card
+                            </span>
+                        </span>
+
+
                     </aside>
-                    <p class="ff-flex-start sub-text" (click)="openDialog(trans)" *ngIf="isMobile" tabindex="0"
-                        role="button" aria-label="View blockchain details">
+                    <p class="ff-flex-start sub-text" (click)="openDialog(trans)" *ngIf="isMobile"
+                        aria-label="View blockchain details">
                         <span class="traced-by-text">
                             {{'viewBlock'|translate}}
                         </span>
@@ -233,4 +241,16 @@
     <ng-container *ngIf="selectedFarmer?.transactionData.length === 1">
         {{'transactionCountText'|translate}}
     </ng-container>
+</ng-template>
+
+<ng-template #svgCard>
+    <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="8.53906" cy="8.39618" rx="8" ry="8.0755" fill="#353B42" />
+        <path
+            d="M5.04286 5.68933H12.0361C12.5759 5.68933 13.0151 6.12854 13.0151 6.66838V10.8643C13.0151 11.4042 12.5759 11.8434 12.0361 11.8434H5.04286C4.50302 11.8434 4.06381 11.4042 4.06381 10.8643V6.66838C4.06381 6.12854 4.50302 5.68933 5.04286 5.68933ZM12.0361 6.24879H5.04286C4.81151 6.24879 4.62327 6.43703 4.62327 6.66838V7.22784H12.4557V6.66838C12.4557 6.43703 12.2674 6.24879 12.0361 6.24879ZM5.04286 11.2839H12.0361C12.2674 11.2839 12.4557 11.0957 12.4557 10.8643V7.7873H4.62327V10.8643C4.62327 11.0957 4.81151 11.2839 5.04286 11.2839Z"
+            fill="white" />
+        <path
+            d="M11.0568 10.4448H11.3365C11.491 10.4448 11.6162 10.3195 11.6162 10.165V9.88532C11.6162 9.73084 11.491 9.60559 11.3365 9.60559H11.0568C10.9023 9.60559 10.777 9.73084 10.777 9.88532V10.165C10.777 10.3195 10.9023 10.4448 11.0568 10.4448Z"
+            fill="white" />
+    </svg>
 </ng-template>

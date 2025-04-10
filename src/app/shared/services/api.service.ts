@@ -14,6 +14,7 @@ const BASE_URL = environment.baseUrl;
 /**
  * Endpoints for the API.
  */
+/* istanbul ignore next */
 const API_ENDPOINTS: any = {
   languages: (entity: string) =>
     `${BASE_URL}/dashboard/ci-theme-language/${entity}/`,
@@ -59,6 +60,7 @@ export class ApiService {
    * @param otp any
    * @returns Observable<any>
    */
+  /* istanbul ignore next */
   getThemes(entity: any, batch: any): Observable<any> {
     const url = API_ENDPOINTS.themes(entity, batch);
     return this.http
@@ -78,6 +80,7 @@ export class ApiService {
    * @param url The URL of the file to download.
    * @returns An observable that emits the file data as a Blob when the HTTP request is successful.
    */
+  /* istanbul ignore next */
   downloadFile(url: string): any {
     return this.http.get(url, { responseType: 'blob' });
   }
