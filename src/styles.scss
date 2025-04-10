@@ -254,10 +254,6 @@ body {
   }
 }
 
-.invalid-link {
-  height: calc(100vh - 240px);
-  text-align: center;
-}
 .header-padding {
   padding: 0 20px;
 }
@@ -498,4 +494,47 @@ body {
 
 .info-icon {
   fill: var(--color-primary) !important;
+}
+
+.product-heading {
+  text-transform: capitalize;
+}
+
+.flexible-content {
+  display: flex;
+  flex-direction: column;
+  @include devices(laptop-xlg) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .first {
+    margin-right: 0;
+    @include devices(laptop-xlg) {
+      margin-right: 20px;
+    }
+  }
+}
+
+.company-claim {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include devices(tablet-md) {
+    justify-content: flex-start;
+  }
+  li {
+    padding: 3px 10px;
+    margin: 5px;
+    margin-right: 10px;
+    background-color: var(--color-light-primary);
+    span {
+      margin-right: 15px;
+      background: none !important;
+      display: flex;
+      align-items: center;
+    }
+  }
 }

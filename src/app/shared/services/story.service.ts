@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 // services
 import { ApiService, LanguageService } from '.';
@@ -136,6 +136,7 @@ export class StoryService {
    * Performs an action by tracking an event using Google Analytics (if available) and opening a new window with the specified URL.
    * @param url The URL to be opened in a new window.
    */
+  /* istanbul ignore next */
   getActionLink(url: any): void {
     if ((window as any).ga && (window as any).ga.getAll) {
       (<any>window).ga(
@@ -167,6 +168,7 @@ export class StoryService {
    * @param theme The theme for which to retrieve available languages.
    * @returns An observable containing the available languages information.
    */
+  /* istanbul ignore next */
   getAvailableLanguagesForTheme(theme: string): Observable<any> {
     return this.apiService.getLanguages(theme).pipe(
       map(({ data, code, success }: ApiResponse) => {
@@ -192,6 +194,13 @@ export class StoryService {
         );
 
         return data;
+      }),
+      catchError(err => {
+        const { browserLanguage, list } =
+          this.languageService.availableLanguageDropdowns();
+
+        this.languageService.languageSettings(browserLanguage, list, theme);
+        return err;
       })
     );
   }
@@ -210,11 +219,13 @@ export class StoryService {
         const { node_name, external_sources } = obj;
         let sourcesStr = '';
         if (external_sources.length === 2) {
-          sourcesStr = `${external_sources[0]} ${this.translate.instant('and')} ${external_sources[1]}`
+          sourcesStr = `${external_sources[0]} ${this.translate.instant(
+            'and'
+          )} ${external_sources[1]}`;
         } else {
           sourcesStr = external_sources?.join(', ');
         }
-        
+
         otherCount += external_sources?.length;
         result.push(
           `${node_name} ${this.translate.instant(

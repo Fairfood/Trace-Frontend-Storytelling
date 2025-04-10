@@ -27,8 +27,7 @@ describe('HeaderComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
-      imports: [TranslateModule.forRoot(), MatMenuModule],
+      imports: [HeaderComponent, TranslateModule, MatMenuModule],
       providers: [
         { provide: LanguageService, useValue: mockLanguageService },
         { provide: StorageService, useValue: storageSpy },
@@ -43,7 +42,6 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should unsubscribe on destroy', () => {
     const subscription = jasmine.createSpyObj('Subscription', ['unsubscribe']);
