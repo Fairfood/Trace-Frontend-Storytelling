@@ -78,8 +78,13 @@ export class GoogleMapComponent {
       );
     }, 1000);
     setTimeout(() => {
-      this.setMapView(this.stages[0].actors, 'stage');
+      if (this.stages?.length && this.stages[0]?.actors) {
+        this.setMapView(this.stages[0].actors, 'stage');
+      } else {
+        console.warn('Stages not initialized yet');
+      }
     }, 9000);
+    
   }
 
   // Set marker icons for actors
@@ -296,7 +301,11 @@ export class GoogleMapComponent {
   // Method to reset the map
   resetMap() {
     setTimeout(() => {
-      this.setMapView(this.stages[0].actors, 'stage');
+      if (this.stages?.length && this.stages[0]?.actors) {
+        this.setMapView(this.stages[0].actors, 'stage');
+      } else {
+        console.warn('Stages not ready in resetMap');
+      }
     }, 400);
     if (this.polygonMap) {
       this.polygonMap.setMap(null);
